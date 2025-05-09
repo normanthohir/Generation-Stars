@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:generation_stars/screens/edukasi_screen.dart';
 import 'package:generation_stars/utils/colors.dart';
-import 'package:generation_stars/widgets/image_source_modal.dart';
-import 'package:generation_stars/widgets/shared_appbar.dart';
+import 'package:generation_stars/widgets/widget_image_source_modal.dart';
+import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:generation_stars/widgets/widgets_nutrisi_mingguna.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -64,6 +65,83 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.background,
       appBar: SharedAppbar(
         title: "Haii Nama Penguna👋",
+        actions: [
+          PopupMenuButton<String>(
+            color: AppColors.button,
+            icon: Icon(FontAwesomeIcons.ellipsisVertical),
+            onSelected: (value) {
+              if (value == 'tentang') {
+              } else if (value == 'edukasi') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EdukasiScreen()),
+                );
+              } else if (value == 'keluar') {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Keluar Aplikasi'),
+                    content: Text('Apakah Anda yakin ingin keluar?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('Batal'),
+                      ),
+                      TextButton(
+                        onPressed: () => exit(0),
+                        child: Text('Keluar'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                value: 'tentang',
+                child: Row(
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.circleInfo,
+                      size: 20,
+                      color: AppColors.background,
+                    ),
+                    SizedBox(width: 5),
+                    Text('Tentang',
+                        style:
+                            GoogleFonts.poppins(color: AppColors.background)),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'edukasi',
+                child: Row(
+                  children: [
+                    Icon(FontAwesomeIcons.book,
+                        size: 20, color: AppColors.background),
+                    SizedBox(width: 5),
+                    Text('Edukasi',
+                        style:
+                            GoogleFonts.poppins(color: AppColors.background)),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'keluar',
+                child: Row(
+                  children: [
+                    Icon(FontAwesomeIcons.rightFromBracket,
+                        size: 20, color: AppColors.background),
+                    SizedBox(width: 5),
+                    Text('Keluar',
+                        style:
+                            GoogleFonts.poppins(color: AppColors.background)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
