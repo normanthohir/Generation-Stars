@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generation_stars/utils/colors.dart';
-import 'package:generation_stars/widgets/shared_appbar.dart';
+import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:url_launcher/url_launcher.dart';
 

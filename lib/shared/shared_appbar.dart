@@ -6,18 +6,20 @@ class SharedAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final String title;
   final List<Widget>? actions;
+  final bool ipmlayLeadingFalse;
 
   const SharedAppbar({
     super.key,
     this.leading,
     required this.title,
+    this.ipmlayLeadingFalse = false,
     this.actions,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: ipmlayLeadingFalse,
       backgroundColor: AppColors.background,
       leading: leading,
       title: Text(
