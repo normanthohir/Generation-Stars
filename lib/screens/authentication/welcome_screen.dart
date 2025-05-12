@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:generation_stars/screens/authentication/login_screen.dart';
 import 'package:generation_stars/screens/authentication/register_screen.dart';
-import 'package:generation_stars/utils/colors.dart';
+import 'package:generation_stars/shared/shared_button.dart';
+import 'package:generation_stars/theme/colors.dart';
+import 'package:generation_stars/widgets/widget_background.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -10,94 +12,96 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 40),
-              // Gambar ilustrasi
-              SizedBox(
-                height: 200,
-                child: Image.asset(
-                  'assets/images/ibu_hamil.png',
-                  fit: BoxFit.contain,
+      backgroundColor: ColorsApp.white,
+      body: Stack(
+        children: [
+          WidgetBackground(), // Using the background widget here
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 40),
+                // Gambar ilustrasi
+                SizedBox(
+                  height: 250,
+                  child: Image.asset(
+                    'assets/images/ibu_hamil.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              SizedBox(height: 28),
-              Text(
-                'Nutrisi Sehat Untuk Ibu Hamil',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.montserrat(
-                  color: Color(0xFF123458),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
+
+                SizedBox(height: 28),
+                Text(
+                  'Nutrisi Sehat Untuk Ibu Hamil',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    color: ColorsApp.black.withOpacity(0.8),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(height: 12),
-              Text(
-                'Bantu penuhi nutrisi selama kehamilan\nuntuk cegah stunting sejak dini.',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.montserrat(
-                  color: Color(0xFF030303),
-                  fontSize: 14,
+                SizedBox(height: 12),
+                Text(
+                  'Bantu penuhi nutrisi selama kehamilan\nuntuk cegah stunting sejak dini.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    color: ColorsApp.black.withOpacity(0.8),
+                    fontSize: 14,
+                  ),
                 ),
-              ),
-              SizedBox(height: 40),
-              // Tombol "Daftar"
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
+                SizedBox(height: 40),
+                // Tombol "Daftar"
+                SizedBox(
+                  width: double.infinity,
+                  child: SharedButtton(
+                    title: Text(
+                      'Daftar',
+                      style: GoogleFonts.poppins(
+                          color: ColorsApp.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
+                    ),
+                    onPressed: () => Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.buttonText,
-                    foregroundColor: Color(0xFFF1EFEC),
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      MaterialPageRoute(
+                        builder: (context) => RegisterScreen(),
+                      ),
                     ),
                   ),
-                  child: Text(
-                    'Daftar',
-                    style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w600, fontSize: 16),
-                  ),
                 ),
-              ),
-              SizedBox(height: 16),
-              // Tombol "Masuk"
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
-                  },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.buttonBorder,
-                    side: BorderSide(color: AppColors.buttonBorder),
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                SizedBox(height: 16),
+                // Tombol "Masuk"
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: ColorsApp.hijau,
+                      side: BorderSide(color: ColorsApp.hijau),
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: Text(
+                      'Masuk',
+                      style: GoogleFonts.poppins(
+                          color: ColorsApp.hijau,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
                     ),
                   ),
-                  child: Text('Masuk',
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w600, fontSize: 16)),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:generation_stars/screens/lengkapi_profile_screen.dart';
-import 'package:generation_stars/utils/colors.dart';
+import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/shared/shared_appbar.dart'; // Pastikan import AppColors
 
 class ProfilePage extends StatelessWidget {

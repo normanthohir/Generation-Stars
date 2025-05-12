@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:generation_stars/utils/colors.dart';
+import 'package:generation_stars/theme/colors.dart';
 
 class NutrisiChartWidget extends StatefulWidget {
   NutrisiChartWidget({Key? key}) : super(key: key);
