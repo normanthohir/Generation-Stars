@@ -4,7 +4,7 @@ import 'package:generation_stars/screens/history_screen.dart';
 import 'package:generation_stars/screens/home_screen.dart';
 import 'package:generation_stars/screens/profile_screen.dart';
 import 'package:generation_stars/screens/trimester_screen.dart';
-import 'package:generation_stars/utils/colors.dart';
+import 'package:generation_stars/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -34,22 +34,21 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: ColorsApp.white,
       body: _pages[_currentIndex],
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: AppColors.button,
+            borderRadius: BorderRadius.all(Radius.circular(25)),
+            color: ColorsApp.hijau,
           ),
           child: SalomonBottomBar(
             margin: EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-            // backgroundColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
             currentIndex: _currentIndex,
             selectedItemColor: Color(0xff6200ee),
-            unselectedItemColor: AppColors.background,
-
+            unselectedItemColor: ColorsApp.white,
             onTap: _onTabTapped,
             items: _navBarItems,
           ),
@@ -66,7 +65,7 @@ final _navBarItems = [
       "Beranda",
       style: GoogleFonts.poppins(fontSize: 15),
     ),
-    selectedColor: AppColors.background,
+    selectedColor: ColorsApp.white,
   ),
   SalomonBottomBarItem(
     icon: Icon(FontAwesomeIcons.chartColumn, size: 20),
@@ -74,7 +73,7 @@ final _navBarItems = [
       "Trimester",
       style: GoogleFonts.poppins(fontSize: 15),
     ),
-    selectedColor: AppColors.background,
+    selectedColor: ColorsApp.white,
   ),
   SalomonBottomBarItem(
     icon: Icon(FontAwesomeIcons.clockRotateLeft, size: 20),
@@ -82,7 +81,7 @@ final _navBarItems = [
       "Riwayat",
       style: GoogleFonts.poppins(fontSize: 15),
     ),
-    selectedColor: AppColors.background,
+    selectedColor: ColorsApp.white,
   ),
   SalomonBottomBarItem(
     icon: Icon(FontAwesomeIcons.solidCircleUser, size: 22),
@@ -90,7 +89,7 @@ final _navBarItems = [
       "Profil",
       style: GoogleFonts.poppins(fontSize: 15),
     ),
-    selectedColor: AppColors.background,
+    selectedColor: ColorsApp.white,
   ),
 ];
 

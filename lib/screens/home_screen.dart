@@ -2,7 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:generation_stars/screens/edukasi_screen.dart';
-import 'package:generation_stars/utils/colors.dart';
+import 'package:generation_stars/screens/tentang_aplikasi_screen.dart';
+import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/widgets/widget_image_source_modal.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:generation_stars/widgets/widgets_nutrisi_mingguna.dart';
@@ -62,15 +63,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.white,
       appBar: SharedAppbar(
         title: "Haii Nama Penguna👋",
         actions: [
           PopupMenuButton<String>(
-            color: AppColors.button,
+            elevation: 2,
+            color: Colors.white70,
+            iconColor: AppColors.button,
             icon: Icon(FontAwesomeIcons.ellipsisVertical),
             onSelected: (value) {
               if (value == 'tentang') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TentangAplikasiScreen()),
+                );
               } else if (value == 'edukasi') {
                 Navigator.push(
                   context,
@@ -104,12 +112,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     Icon(
                       FontAwesomeIcons.circleInfo,
                       size: 20,
-                      color: AppColors.background,
+                      color: AppColors.button,
                     ),
                     SizedBox(width: 5),
                     Text('Tentang',
-                        style:
-                            GoogleFonts.poppins(color: AppColors.background)),
+                        style: GoogleFonts.poppins(color: AppColors.button)),
                   ],
                 ),
               ),
@@ -118,11 +125,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: [
                     Icon(FontAwesomeIcons.book,
-                        size: 20, color: AppColors.background),
+                        size: 20, color: AppColors.button),
                     SizedBox(width: 5),
                     Text('Edukasi',
-                        style:
-                            GoogleFonts.poppins(color: AppColors.background)),
+                        style: GoogleFonts.poppins(color: AppColors.button)),
                   ],
                 ),
               ),
@@ -131,11 +137,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: [
                     Icon(FontAwesomeIcons.rightFromBracket,
-                        size: 20, color: AppColors.background),
+                        size: 20, color: AppColors.button),
                     SizedBox(width: 5),
                     Text('Keluar',
-                        style:
-                            GoogleFonts.poppins(color: AppColors.background)),
+                        style: GoogleFonts.poppins(color: AppColors.button)),
                   ],
                 ),
               ),
@@ -148,26 +153,26 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 child: WidgetsNutrisiMingguan(),
               ),
               SizedBox(height: 50),
               Text(
                 'Deteksi Nutrisi Makanan',
                 style: GoogleFonts.poppins(
-                    fontSize: 22, fontWeight: FontWeight.bold),
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: ColorsApp.text),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Text(
                 'Pilih sumber gambar untuk memeriksa\nnutrisi makanan bagi ibu hamil',
                 textAlign: TextAlign.center,
-                style:
-                    GoogleFonts.poppins(fontSize: 15, color: AppColors.subtext),
+                style: GoogleFonts.poppins(fontSize: 15, color: ColorsApp.grey),
               ),
               SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
+                padding: EdgeInsets.symmetric(horizontal: 40),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -177,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius:
                             BorderRadius.vertical(top: Radius.circular(20)),
                       ),
-                      backgroundColor: AppColors.background,
+                      backgroundColor: Colors.white,
                       builder: (context) => ImageSourceModal(
                         onCameraSelected: () =>
                             _processImage(ImageSource.camera),
@@ -186,11 +191,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.button,
-                      foregroundColor: Color(0xFFF1EFEC),
+                      backgroundColor: ColorsApp.hijau,
+                      foregroundColor: ColorsApp.white,
                       padding: EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(24),
                       ),
                     ),
                     child: Row(
@@ -198,14 +203,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Icon(
                           FontAwesomeIcons.cameraRetro,
-                          size: 28,
+                          size: 24,
                         ),
                         SizedBox(width: 10),
                         Text(
                           'Pilih gambar',
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w600,
-                            fontSize: 18,
+                            fontSize: 17,
                           ),
                         ),
                       ],

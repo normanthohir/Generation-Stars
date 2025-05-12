@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:generation_stars/utils/colors.dart';
+import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 class TentangAplikasiScreen extends StatelessWidget {
-  const TentangAplikasiScreen({super.key});
+  TentangAplikasiScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,18 +13,19 @@ class TentangAplikasiScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       appBar: SharedAppbar(
         title: 'Tentang Aplikasi',
+        ipmlayLeadingFalse: true,
       ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // App Info Card
                   _buildAppInfoCard(),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Features Section
                   Text(
@@ -34,7 +35,7 @@ class TentangAplikasiScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   _buildFeatureItem(
                     icon: Icons.monitor_heart,
                     title: 'Pemantauan Nutrisi',
@@ -51,7 +52,7 @@ class TentangAplikasiScreen extends StatelessWidget {
                     title: 'Artikel Terpercaya',
                     description: 'Informasi kesehatan dari sumber terpercaya',
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Team Section
                   Text(
@@ -61,7 +62,7 @@ class TentangAplikasiScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -84,11 +85,11 @@ class TentangAplikasiScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Contact Section
                   _buildContactCard(),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
 
                   // Version Info
                   Center(
@@ -115,14 +116,14 @@ class TentangAplikasiScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         child: Column(
           children: [
             Image.asset(
               'assets/images/icons.png',
               height: 80,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               'Bunda Sehat',
               style: GoogleFonts.poppins(
@@ -130,7 +131,7 @@ class TentangAplikasiScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               'Aplikasi pendamping kehamilan untuk memantau kesehatan ibu dan janin',
               textAlign: TextAlign.center,
@@ -138,9 +139,9 @@ class TentangAplikasiScreen extends StatelessWidget {
                 color: Colors.grey[600],
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Divider(color: Colors.grey[300]),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -183,19 +184,19 @@ class TentangAplikasiScreen extends StatelessWidget {
     required String description,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.blue[50],
               shape: BoxShape.circle,
             ),
             child: Icon(icon, color: Colors.blue[800]),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,7 +229,7 @@ class TentangAplikasiScreen extends StatelessWidget {
   }) {
     return Container(
       width: 150,
-      margin: const EdgeInsets.only(right: 16),
+      margin: EdgeInsets.only(right: 16),
       child: Column(
         children: [
           ClipRRect(
@@ -240,7 +241,7 @@ class TentangAplikasiScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             name,
             style: GoogleFonts.poppins(
@@ -266,7 +267,7 @@ class TentangAplikasiScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -277,7 +278,7 @@ class TentangAplikasiScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             _buildContactItem(
               icon: Icons.email,
               label: 'support@bundasehat.com',

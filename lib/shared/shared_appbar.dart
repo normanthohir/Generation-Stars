@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:generation_stars/utils/colors.dart';
+import 'package:flutter/services.dart';
+import 'package:generation_stars/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SharedAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -8,7 +9,7 @@ class SharedAppbar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final bool ipmlayLeadingFalse;
 
-  const SharedAppbar({
+  SharedAppbar({
     super.key,
     this.leading,
     required this.title,
@@ -20,12 +21,16 @@ class SharedAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: ipmlayLeadingFalse,
-      backgroundColor: AppColors.background,
+      // systemOverlayStyle: SystemUiOverlayStyle.light,
+      iconTheme: IconThemeData(
+        color: AppColors.button,
+      ),
+      backgroundColor: ColorsApp.white,
       leading: leading,
       title: Text(
         title,
         style: GoogleFonts.poppins(
-          color: AppColors.heading,
+          color: ColorsApp.text,
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
@@ -36,5 +41,5 @@ class SharedAppbar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

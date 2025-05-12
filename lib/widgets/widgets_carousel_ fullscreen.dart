@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ModernImageCarousel extends StatefulWidget {
-  final List<String> imageUrls;
+  final List<String> imageAssets;
 
-  const ModernImageCarousel({super.key, required this.imageUrls});
+  const ModernImageCarousel({super.key, required this.imageAssets});
 
   @override
   State<ModernImageCarousel> createState() => _ModernImageCarouselState();
@@ -26,7 +26,7 @@ class _ModernImageCarouselState extends State<ModernImageCarousel> {
       children: [
         PageView.builder(
           controller: _pageController,
-          itemCount: widget.imageUrls.length,
+          itemCount: widget.imageAssets.length,
           onPageChanged: (index) {
             setState(() {
               _currentPage = index;
@@ -36,7 +36,7 @@ class _ModernImageCarouselState extends State<ModernImageCarousel> {
             return Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(widget.imageUrls[index]),
+                  image: AssetImage(widget.imageAssets[index]),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -64,7 +64,7 @@ class _ModernImageCarouselState extends State<ModernImageCarousel> {
           child: Center(
             child: SmoothPageIndicator(
               controller: _pageController,
-              count: widget.imageUrls.length,
+              count: widget.imageAssets.length,
               effect: const ExpandingDotsEffect(
                 dotWidth: 8,
                 dotHeight: 8,
@@ -88,7 +88,7 @@ class _ModernImageCarouselState extends State<ModernImageCarousel> {
         //       borderRadius: BorderRadius.circular(20),
         //     ),
         //     child: Text(
-        //       '${_currentPage + 1}/${widget.imageUrls.length}',
+        //       '${_currentPage + 1}/${widget.imageAssets;.length}',
         //       style: const TextStyle(
         //         color: Colors.white,
         //         fontSize: 14,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generation_stars/utils/colors.dart';
+import 'package:generation_stars/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ResetPass extends StatelessWidget {

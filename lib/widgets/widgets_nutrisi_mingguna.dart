@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-import 'package:generation_stars/utils/colors.dart';
+import 'package:generation_stars/theme/colors.dart';
 
 class WidgetsNutrisiMingguan extends StatelessWidget {
   final double totalKalori;
@@ -25,16 +25,16 @@ class WidgetsNutrisiMingguan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.background,
-        // borderRadius: BorderRadius.circular(20),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey.withOpacity(0.2),
-        //     blurRadius: 10,
-        //     offset: const Offset(0, 4),
-        //   )
-        // ],
-      ),
+          // color: AppColors.background,
+          // borderRadius: BorderRadius.circular(20),
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey.withOpacity(0.2),
+          //     blurRadius: 10,
+          //     offset: const Offset(0, 4),
+          //   )
+          // ],
+          ),
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [

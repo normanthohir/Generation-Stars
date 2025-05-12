@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generation_stars/utils/colors.dart';
+import 'package:generation_stars/theme/colors.dart';
 
 class SharedButtton extends StatelessWidget {
   final Widget title;
@@ -17,11 +17,11 @@ class SharedButtton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.buttonText,
-          foregroundColor: Color(0xFFF1EFEC),
+          backgroundColor: ColorsApp.hijau,
+          foregroundColor: ColorsApp.white,
           padding: EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
         child: title,

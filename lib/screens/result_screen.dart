@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:generation_stars/utils/colors.dart'; // Pastikan sudah import AppColors
+import 'package:generation_stars/theme/colors.dart'; // Pastikan sudah import AppColors
 
 class ResultScreen extends StatelessWidget {
   final File image;

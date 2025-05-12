@@ -5,7 +5,7 @@ import 'package:generation_stars/widgets/widgets_carousel_%20fullscreen.dart';
 class EdukasiScreen extends StatelessWidget {
   EdukasiScreen({super.key});
 
-  final List<String> imageUrls = [
+  final List<String> imageAssets = [
     'assets/images/edukasi/1.png',
     'assets/images/edukasi/2.png',
     'assets/images/edukasi/3.png',
@@ -21,7 +21,7 @@ class EdukasiScreen extends StatelessWidget {
         title: 'Edukasi Stanting',
         ipmlayLeadingFalse: true,
       ),
-      body: ModernImageCarousel(imageUrls: imageUrls),
+      body: ModernImageCarousel(imageAssets: imageAssets),
     );
   }
 }
