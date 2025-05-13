@@ -7,7 +7,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: ColorsApp.white,
       appBar: SharedAppbar(title: 'Profil Saya'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),

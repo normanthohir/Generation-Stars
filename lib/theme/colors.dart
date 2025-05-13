@@ -14,10 +14,11 @@ class ColorsApp {
   static Color white = Color(0xFFFFFFFF);
   static Color black = Color(0xFF000000);
   static Color text = Color(0xFF030303);
-  static Color grey = Color.fromARGB(255, 97, 97, 97);
+  static Color grey = Color.fromARGB(255, 86, 86, 86);
   static Color hijau = Color(0xFFF0b9b8a);
   static Color pink = Color(0xFFFf596a1);
   static Color pinkPudar = Color(0xFFFfadeeb);
   static Color biruMuda = Color(0xFFFc4e1f6);
+  static Color biru = const Color.fromARGB(255, 21, 96, 181);
   static Color amber = Color(0xFFFf9c975);
 }

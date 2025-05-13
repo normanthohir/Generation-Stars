@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       'Lupa Password?',
                       style: GoogleFonts.poppins(
-                        color: ColorsApp.text.withOpacity(0.8),
+                        color: ColorsApp.grey,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'Belum punya akun?',
                       style: GoogleFonts.poppins(
-                        color: ColorsApp.text,
+                        color: ColorsApp.grey,
                         fontSize: 14,
                       ),
                     ),

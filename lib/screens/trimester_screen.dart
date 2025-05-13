@@ -10,7 +10,7 @@ class TrimesterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: ColorsApp.white,
       appBar: SharedAppbar(title: 'Trimester'),
       body: Column(
         children: [NutrisiChartWidget()],

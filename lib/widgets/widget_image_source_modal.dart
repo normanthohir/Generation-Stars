@@ -7,7 +7,7 @@ class ImageSourceModal extends StatelessWidget {
   final VoidCallback onCameraSelected;
   final VoidCallback onGallerySelected;
 
-  const ImageSourceModal({
+  ImageSourceModal({
     Key? key,
     required this.onCameraSelected,
     required this.onGallerySelected,
@@ -16,10 +16,10 @@ class ImageSourceModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        color: AppColors.button,
+        color: ColorsApp.hijau,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -32,7 +32,7 @@ class ImageSourceModal extends StatelessWidget {
               color: AppColors.background,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
