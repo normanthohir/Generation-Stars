@@ -23,14 +23,14 @@ class SharedAppbar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: ipmlayLeadingFalse,
       // systemOverlayStyle: SystemUiOverlayStyle.light,
       iconTheme: IconThemeData(
-        color: AppColors.button,
+        color: ColorsApp.black,
       ),
       backgroundColor: ColorsApp.white,
       leading: leading,
       title: Text(
         title,
         style: GoogleFonts.poppins(
-          color: ColorsApp.text,
+          color: ColorsApp.black,
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),

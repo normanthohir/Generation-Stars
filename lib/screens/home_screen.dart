@@ -63,13 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: ColorsApp.white,
       appBar: SharedAppbar(
         title: "Haii Nama Penguna👋",
         actions: [
           PopupMenuButton<String>(
             elevation: 2,
-            color: Colors.white70,
+            color: ColorsApp.white,
             iconColor: AppColors.button,
             icon: Icon(FontAwesomeIcons.ellipsisVertical),
             onSelected: (value) {
@@ -112,11 +112,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     Icon(
                       FontAwesomeIcons.circleInfo,
                       size: 20,
-                      color: AppColors.button,
+                      color: ColorsApp.grey,
                     ),
                     SizedBox(width: 5),
                     Text('Tentang',
-                        style: GoogleFonts.poppins(color: AppColors.button)),
+                        style: GoogleFonts.poppins(
+                          color: ColorsApp.grey,
+                        )),
                   ],
                 ),
               ),
@@ -124,11 +126,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 value: 'edukasi',
                 child: Row(
                   children: [
-                    Icon(FontAwesomeIcons.book,
-                        size: 20, color: AppColors.button),
+                    Icon(
+                      FontAwesomeIcons.book,
+                      size: 20,
+                      color: ColorsApp.grey,
+                    ),
                     SizedBox(width: 5),
                     Text('Edukasi',
-                        style: GoogleFonts.poppins(color: AppColors.button)),
+                        style: GoogleFonts.poppins(
+                          color: ColorsApp.grey,
+                        )),
                   ],
                 ),
               ),
@@ -136,11 +143,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 value: 'keluar',
                 child: Row(
                   children: [
-                    Icon(FontAwesomeIcons.rightFromBracket,
-                        size: 20, color: AppColors.button),
+                    Icon(
+                      FontAwesomeIcons.rightFromBracket,
+                      size: 20,
+                      color: ColorsApp.grey,
+                    ),
                     SizedBox(width: 5),
                     Text('Keluar',
-                        style: GoogleFonts.poppins(color: AppColors.button)),
+                        style: GoogleFonts.poppins(
+                          color: ColorsApp.grey,
+                        )),
                   ],
                 ),
               ),

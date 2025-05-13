@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:generation_stars/screens/detain_history_screen.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
+import 'package:generation_stars/widgets/widget_background.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -27,9 +28,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(
-              primary: AppColors.button, // Header background color
-              onPrimary: Colors.white, // Header text color
-              onSurface: Colors.black, // Body text color
+              primary: ColorsApp.hijau, // Header background color
+              onPrimary: ColorsApp.white, // Header text color
+              onSurface: ColorsApp.black, // Body text color
             ),
             dialogBackgroundColor: Colors.white, // Background color
           ),
@@ -47,10 +48,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: ColorsApp.white,
       appBar: SharedAppbar(title: 'Riwayat Konsumsi'),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,7 +59,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
             Container(
               margin: EdgeInsets.only(bottom: 20, top: 10),
               decoration: BoxDecoration(
-                color: AppColors.button,
+                // color: ColorsApp.hijau.withOpacity(0.9),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    ColorsApp.hijau.withOpacity(0.9),
+                    ColorsApp.hijau.withOpacity(0.6),
+                  ],
+                ),
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -74,7 +83,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
                 leading: Icon(
                   FontAwesomeIcons.calendarDay,
-                  color: AppColors.background,
+                  color: ColorsApp.white,
                   size: 28,
                 ),
                 title: Text(
@@ -82,20 +91,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
-                    color: AppColors.background,
+                    color: ColorsApp.white,
                   ),
                 ),
                 subtitle: Text(
                   DateFormat('EEEE, d MMMM y').format(_selectedDate),
                   style: GoogleFonts.poppins(
                     fontSize: 14,
-                    color: AppColors.background,
+                    color: ColorsApp.white,
                   ),
                 ),
                 trailing: Icon(
                   FontAwesomeIcons.caretDown,
                   size: 20,
-                  color: AppColors.background,
+                  color: ColorsApp.white,
                 ),
                 onTap: () => _selectDate(context),
               ),
@@ -115,10 +124,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 itemCount: 3, // Placeholder untuk 3 item
                 itemBuilder: (context, index) {
                   return Card(
-                    color: AppColors.background,
+                    color: ColorsApp.white,
                     margin: EdgeInsets.only(bottom: 18),
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(color: AppColors.button),
+                      side: BorderSide(color: ColorsApp.hijau, width: 2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     elevation: 2,
@@ -129,7 +138,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         backgroundColor: AppColors.button.withOpacity(0.1),
                         child: Icon(
                           Icons.fastfood,
-                          color: AppColors.button,
+                          color: ColorsApp.hijau,
                         ),
                       ),
                       title: Text(

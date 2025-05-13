@@ -10,7 +10,7 @@ class TentangAplikasiScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: ColorsApp.white,
       appBar: SharedAppbar(
         title: 'Tentang Aplikasi',
         ipmlayLeadingFalse: true,
@@ -27,7 +27,6 @@ class TentangAplikasiScreen extends StatelessWidget {
                   _buildAppInfoCard(),
                   SizedBox(height: 24),
 
-                  // Features Section
                   Text(
                     'Fitur Unggulan',
                     style: GoogleFonts.poppins(
@@ -111,6 +110,7 @@ class TentangAplikasiScreen extends StatelessWidget {
 
   Widget _buildAppInfoCard() {
     return Card(
+      color: ColorsApp.biruMuda,
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -121,12 +121,13 @@ class TentangAplikasiScreen extends StatelessWidget {
           children: [
             Image.asset(
               'assets/images/icons.png',
-              height: 80,
+              height: 100,
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 14),
             Text(
               'Bunda Sehat',
               style: GoogleFonts.poppins(
+                color: ColorsApp.text,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -136,11 +137,11 @@ class TentangAplikasiScreen extends StatelessWidget {
               'Aplikasi pendamping kehamilan untuk memantau kesehatan ibu dan janin',
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
-                color: Colors.grey[600],
+                color: ColorsApp.black.withOpacity(0.9),
               ),
             ),
             SizedBox(height: 16),
-            Divider(color: Colors.grey[300]),
+            Divider(color: ColorsApp.grey),
             SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -164,14 +165,14 @@ class TentangAplikasiScreen extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.blue[800],
+            color: ColorsApp.biru,
           ),
         ),
         Text(
           label,
           style: GoogleFonts.poppins(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: ColorsApp.black.withOpacity(0.7),
           ),
         ),
       ],
@@ -262,6 +263,7 @@ class TentangAplikasiScreen extends StatelessWidget {
 
   Widget _buildContactCard() {
     return Card(
+      color: ColorsApp.biruMuda,
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -276,6 +278,7 @@ class TentangAplikasiScreen extends StatelessWidget {
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
+                color: ColorsApp.text,
               ),
             ),
             SizedBox(height: 12),
@@ -307,58 +310,15 @@ class TentangAplikasiScreen extends StatelessWidget {
   }) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: Colors.blue[800]),
+      leading: Icon(icon, color: ColorsApp.biru),
       title: Text(
         label,
-        style: GoogleFonts.poppins(),
+        style: GoogleFonts.poppins(
+          fontSize: 16,
+          color: ColorsApp.black.withOpacity(0.8),
+        ),
       ),
       onTap: onTap,
     );
   }
 }
-//   Future<void> _launchEmail() async {
-//     final Uri emailLaunchUri = Uri(
-//       scheme: 'mailto',
-//       path: 'support@bundasehat.com',
-//     );
-//     if (await canLaunchUrl(emailLaunchUri)) {
-//       await launchUrl(emailLaunchUri);
-//     }
-//   }
-
-//   Future<void> _launchPhone() async {
-//     final Uri phoneLaunchUri = Uri(
-//       scheme: 'tel',
-//       path: '+6281234567890',
-//     );
-//     if (await canLaunchUrl(phoneLaunchUri)) {
-//       await launchUrl(phoneLaunchUri);
-//     }
-//   }
-
-//   Future<void> _launchWebsite() async {
-//     final Uri websiteLaunchUri = Uri.parse('https://www.bundasehat.com');
-//     if (await canLaunchUrl(websiteLaunchUri)) {
-//       await launchUrl(websiteLaunchUri);
-//     }
-//   }
-
-//   Future<void> _launchSocial(String platform) async {
-//     String url = '';
-//     switch (platform) {
-//       case 'facebook':
-//         url = 'https://facebook.com/bundasehat';
-//         break;
-//       case 'instagram':
-//         url = 'https://instagram.com/bundasehat';
-//         break;
-//       case 'twitter':
-//         url = 'https://twitter.com/bundasehat';
-//         break;
-//     }
-//     final Uri socialLaunchUri = Uri.parse(url);
-//     if (await canLaunchUrl(socialLaunchUri)) {
-//       await launchUrl(socialLaunchUri);
-//     }
-//   }
-// }

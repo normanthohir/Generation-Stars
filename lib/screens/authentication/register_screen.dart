@@ -168,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Text(
                       'Sudah punya akun?',
                       style: GoogleFonts.poppins(
-                        color: ColorsApp.black.withOpacity(0.7),
+                        color: ColorsApp.grey,
                         fontSize: 14,
                       ),
                     ),
