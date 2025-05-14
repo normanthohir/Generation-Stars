@@ -10,6 +10,10 @@ class SharedTextFormField extends StatelessWidget {
   final bool obsecureText;
   final String? Function(String?)? validator;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
+  final TextInputType? keyboardType;
+  final bool alignLabelWithHint;
+  final int? maxLines;
 
   const SharedTextFormField({
     super.key,
@@ -20,6 +24,10 @@ class SharedTextFormField extends StatelessWidget {
     this.obsecureText = false,
     this.validator,
     this.suffixIcon,
+    this.prefixIcon,
+    this.keyboardType,
+    this.alignLabelWithHint = false,
+    this.maxLines,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,6 +35,8 @@ class SharedTextFormField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          maxLines: maxLines,
+          keyboardType: keyboardType,
           cursorColor: ColorsApp.text,
           style: GoogleFonts.poppins(color: ColorsApp.text),
           obscureText: obsecureText,
@@ -40,6 +50,8 @@ class SharedTextFormField extends StatelessWidget {
             labelText: labelText,
             labelStyle: GoogleFonts.poppins(color: ColorsApp.text),
             suffixIcon: suffixIcon,
+            prefixIcon: prefixIcon,
+            alignLabelWithHint: alignLabelWithHint,
             filled: true,
             fillColor: Colors.transparent,
             enabledBorder: OutlineInputBorder(

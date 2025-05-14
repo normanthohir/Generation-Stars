@@ -22,7 +22,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     HomeScreen(),
     TrimesterScreen(),
     HistoryScreen(),
-    ProfilePage()
+    ProfileScreen()
   ];
 
   void _onTabTapped(int index) {

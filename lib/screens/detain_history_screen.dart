@@ -26,7 +26,7 @@ class DetailHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: ColorsApp.white,
       appBar: SharedAppbar(title: foodName, ipmlayLeadingFalse: true),
       body: CustomScrollView(
         slivers: [

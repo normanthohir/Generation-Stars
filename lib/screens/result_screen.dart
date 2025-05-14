@@ -86,11 +86,11 @@ class ResultScreen extends StatelessWidget {
                     ? Container(
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: ColorsApp.hijau.withOpacity(0.16),
-                          borderRadius: BorderRadius.circular(16),
+                          // border: Border.all(color: ColorsApp.hijau.withOpacity(0.6)),
+                          borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
+                              color: ColorsApp.hijau.withOpacity(0.2),
                               blurRadius: 10,
                               offset: Offset(0, 4),
                             ),
