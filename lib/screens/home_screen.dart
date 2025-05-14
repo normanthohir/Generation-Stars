@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:generation_stars/screens/edukasi_screen.dart';
 import 'package:generation_stars/screens/tentang_aplikasi_screen.dart';
 import 'package:generation_stars/theme/colors.dart';
+import 'package:generation_stars/widgets/widget_custom_appBar_menu.dart';
 import 'package:generation_stars/widgets/widget_image_source_modal.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:generation_stars/widgets/widgets_nutrisi_mingguna.dart';
@@ -67,25 +68,32 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: SharedAppbar(
         title: "Haii Nama Penguna👋",
         actions: [
-          PopupMenuButton<String>(
-            elevation: 2,
-            color: ColorsApp.white,
-            iconColor: AppColors.button,
-            icon: Icon(FontAwesomeIcons.ellipsisVertical),
-            onSelected: (value) {
-              if (value == 'tentang') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => TentangAplikasiScreen()),
-                );
-              } else if (value == 'edukasi') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EdukasiScreen()),
-                );
-              } else if (value == 'keluar') {
-                showDialog(
+          CustomAppBarMenu(
+            iconItemColor: ColorsApp.hijauTua,
+            textColor: ColorsApp.hijauTua,
+            menuColor: ColorsApp.white,
+            items: [
+              AppBarMenuItem(
+                value: 'tentang',
+                label: 'Tentang',
+                icon: FontAwesomeIcons.circleInfo,
+                onSelected: (context) => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TentangAplikasiScreen())),
+              ),
+              AppBarMenuItem(
+                value: 'edukasi',
+                label: 'Edukasi',
+                icon: FontAwesomeIcons.book,
+                onSelected: (context) => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EdukasiScreen())),
+              ),
+              AppBarMenuItem(
+                value: 'keluar',
+                label: 'Keluar',
+                icon: FontAwesomeIcons.rightFromBracket,
+                onSelected: (context) => showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
                     title: Text('Keluar Aplikasi'),
@@ -101,62 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                );
-              }
-            },
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem(
-                value: 'tentang',
-                child: Row(
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.circleInfo,
-                      size: 20,
-                      color: ColorsApp.grey,
-                    ),
-                    SizedBox(width: 5),
-                    Text('Tentang',
-                        style: GoogleFonts.poppins(
-                          color: ColorsApp.grey,
-                        )),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'edukasi',
-                child: Row(
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.book,
-                      size: 20,
-                      color: ColorsApp.grey,
-                    ),
-                    SizedBox(width: 5),
-                    Text('Edukasi',
-                        style: GoogleFonts.poppins(
-                          color: ColorsApp.grey,
-                        )),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: 'keluar',
-                child: Row(
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.rightFromBracket,
-                      size: 20,
-                      color: ColorsApp.grey,
-                    ),
-                    SizedBox(width: 5),
-                    Text('Keluar',
-                        style: GoogleFonts.poppins(
-                          color: ColorsApp.grey,
-                        )),
-                  ],
                 ),
               ),
             ],
+            iconColor: ColorsApp.black,
           ),
         ],
       ),

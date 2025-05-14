@@ -16,6 +16,7 @@ class ColorsApp {
   static Color text = Color(0xFF030303);
   static Color grey = Color.fromARGB(255, 86, 86, 86);
   static Color hijau = Color(0xFFF0b9b8a);
+  static Color hijauTua = Color.fromARGB(255, 0, 94, 83);
   static Color pink = Color(0xFFFf596a1);
   static Color pinkPudar = Color(0xFFFfadeeb);
   static Color biruMuda = Color(0xFFFc4e1f6);

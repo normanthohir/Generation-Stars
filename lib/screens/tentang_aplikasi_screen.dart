@@ -15,105 +15,109 @@ class TentangAplikasiScreen extends StatelessWidget {
         title: 'Tentang Aplikasi',
         ipmlayLeadingFalse: true,
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // App Info Card
-                  _buildAppInfoCard(),
-                  SizedBox(height: 24),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // App Info Card
+              _buildAppInfoCard(),
+              SizedBox(height: 24),
 
-                  Text(
-                    'Fitur Unggulan',
-                    style: GoogleFonts.poppins(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  _buildFeatureItem(
-                    icon: Icons.monitor_heart,
-                    title: 'Pemantauan Nutrisi',
-                    description:
-                        'Pantau asupan gizi harian untuk kesehatan ibu dan janin',
-                  ),
-                  _buildFeatureItem(
-                    icon: Icons.calendar_today,
-                    title: 'Kalender Kehamilan',
-                    description: 'Lacak perkembangan janin mingguan',
-                  ),
-                  _buildFeatureItem(
-                    icon: Icons.article,
-                    title: 'Artikel Terpercaya',
-                    description: 'Informasi kesehatan dari sumber terpercaya',
-                  ),
-                  SizedBox(height: 24),
-
-                  // Team Section
-                  Text(
-                    'Tim Kami',
-                    style: GoogleFonts.poppins(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        _buildTeamMember(
-                          name: 'Dr. Sarah',
-                          role: 'Dokter Kandungan',
-                          image: 'assets/images/ibu_hamil.png',
-                        ),
-                        _buildTeamMember(
-                          name: 'Dr. Michael',
-                          role: 'Ahli Gizi',
-                          image: 'assets/images/ibu_hamil.png',
-                        ),
-                        _buildTeamMember(
-                          name: 'Dr. Michael',
-                          role: 'Ahli Gizi',
-                          image: 'assets/images/ibu_hamil.png',
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 24),
-
-                  // Contact Section
-                  _buildContactCard(),
-                  SizedBox(height: 24),
-
-                  // Version Info
-                  Center(
-                    child: Text(
-                      'Versi 1.0.0',
-                      style: GoogleFonts.poppins(
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                ],
+              Text(
+                'Fitur Unggulan',
+                style: GoogleFonts.poppins(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: ColorsApp.text,
+                ),
               ),
-            ),
+              SizedBox(height: 16),
+              _buildFeatureItem(
+                icon: Icons.monitor_heart,
+                title: 'Pemantauan Nutrisi',
+                description:
+                    'Pantau asupan gizi harian untuk kesehatan ibu dan janin',
+              ),
+              _buildFeatureItem(
+                icon: Icons.calendar_today,
+                title: 'Kalender Kehamilan',
+                description: 'Lacak perkembangan janin mingguan',
+              ),
+              _buildFeatureItem(
+                icon: Icons.article,
+                title: 'Artikel Terpercaya',
+                description: 'Informasi kesehatan dari sumber terpercaya',
+              ),
+              SizedBox(height: 24),
+
+              // Team Section
+              Text(
+                'Tim Kami',
+                style: GoogleFonts.poppins(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: ColorsApp.text,
+                ),
+              ),
+              SizedBox(height: 16),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _buildTeamMember(
+                      name: 'Dr. Sarah',
+                      role: 'Dokter Kandungan',
+                      image: 'assets/images/ibu_hamil.png',
+                    ),
+                    _buildTeamMember(
+                      name: 'Dr. Michael',
+                      role: 'Ahli Gizi',
+                      image: 'assets/images/ibu_hamil.png',
+                    ),
+                    _buildTeamMember(
+                      name: 'Dr. Michael',
+                      role: 'Ahli Gizi',
+                      image: 'assets/images/ibu_hamil.png',
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24),
+
+              // Contact Section
+              _buildContactCard(),
+              SizedBox(height: 24),
+
+              // Version Info
+              Center(
+                child: Text(
+                  'Versi 1.0.0',
+                  style: GoogleFonts.poppins(
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
   Widget _buildAppInfoCard() {
-    return Card(
-      color: ColorsApp.biruMuda,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
+        // border: Border.all(color: ColorsApp.hijau.withOpacity(0.6)),
         borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: ColorsApp.hijau.withOpacity(0.2),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -137,11 +141,13 @@ class TentangAplikasiScreen extends StatelessWidget {
               'Aplikasi pendamping kehamilan untuk memantau kesehatan ibu dan janin',
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
-                color: ColorsApp.black.withOpacity(0.9),
+                color: ColorsApp.text.withOpacity(0.7),
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
               ),
             ),
             SizedBox(height: 16),
-            Divider(color: ColorsApp.grey),
+            Divider(color: ColorsApp.hijauTua),
             SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -165,14 +171,14 @@ class TentangAplikasiScreen extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: ColorsApp.biru,
+            color: ColorsApp.hijauTua,
           ),
         ),
         Text(
           label,
           style: GoogleFonts.poppins(
             fontSize: 12,
-            color: ColorsApp.black.withOpacity(0.7),
+            color: ColorsApp.text,
           ),
         ),
       ],
@@ -192,10 +198,10 @@ class TentangAplikasiScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.blue[50],
+              color: ColorsApp.hijau.withOpacity(0.20),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: Colors.blue[800]),
+            child: Icon(icon, color: ColorsApp.hijauTua),
           ),
           SizedBox(width: 16),
           Expanded(
@@ -207,12 +213,13 @@ class TentangAplikasiScreen extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
+                    color: ColorsApp.text,
                   ),
                 ),
                 Text(
                   description,
                   style: GoogleFonts.poppins(
-                    color: Colors.grey[600],
+                    color: ColorsApp.grey,
                   ),
                 ),
               ],
@@ -262,11 +269,17 @@ class TentangAplikasiScreen extends StatelessWidget {
   }
 
   Widget _buildContactCard() {
-    return Card(
-      color: ColorsApp.biruMuda,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
+        // border: Border.all(color: ColorsApp.hijau.withOpacity(0.6)),
         borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: ColorsApp.hijau.withOpacity(0.2),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -285,17 +298,14 @@ class TentangAplikasiScreen extends StatelessWidget {
             _buildContactItem(
               icon: Icons.email,
               label: 'support@bundasehat.com',
-              onTap: () => (),
             ),
             _buildContactItem(
               icon: Icons.phone,
               label: '+62 812-3456-7890',
-              onTap: () => (),
             ),
             _buildContactItem(
               icon: Icons.language,
               label: 'www.bundasehat.com',
-              onTap: () => (),
             ),
           ],
         ),
@@ -306,19 +316,17 @@ class TentangAplikasiScreen extends StatelessWidget {
   Widget _buildContactItem({
     required IconData icon,
     required String label,
-    required VoidCallback onTap,
   }) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: Icon(icon, color: ColorsApp.biru),
+      leading: Icon(icon, color: ColorsApp.hijauTua),
       title: Text(
         label,
         style: GoogleFonts.poppins(
           fontSize: 16,
-          color: ColorsApp.black.withOpacity(0.8),
+          color: ColorsApp.text.withOpacity(0.7),
         ),
       ),
-      onTap: onTap,
     );
   }
 }
