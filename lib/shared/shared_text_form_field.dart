@@ -27,7 +27,7 @@ class SharedTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.keyboardType,
     this.alignLabelWithHint = false,
-    this.maxLines,
+    this.maxLines = 1,
   });
   @override
   Widget build(BuildContext context) {
@@ -63,6 +63,16 @@ class SharedTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide:
                   BorderSide(color: ColorsApp.text.withOpacity(0.6), width: 2),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide:
+                  BorderSide(color: Colors.red.withOpacity(0.6), width: 2),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide:
+                  BorderSide(color: Colors.red.withOpacity(0.6), width: 2),
             ),
             focusColor: ColorsApp.hijau,
           ),
