@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:generation_stars/screens/authentication/login_screen.dart';
+import 'package:generation_stars/screens/lengkapi_profile_screen.dart';
+import 'package:generation_stars/services/authentication_service.dart';
 import 'package:generation_stars/shared/shared_button.dart';
 import 'package:generation_stars/shared/shared_text_form_field.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/widgets/widget_background.dart';
+import 'package:generation_stars/widgets/widget_custom_snackbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -16,21 +22,55 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  File? _image;
   bool _isObscure = true;
 
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  final authService = AuthService();
+  bool _isLoading = false;
 
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
+  void _register() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    final confirmPassword = _confirmPasswordController.text;
+
+    if (password != confirmPassword) {
+      CustomSnackbar.show(
+        context: context,
+        message: "Password & konfirmasi password tidak cocok",
+        type: SnackbarType.error,
+      );
+    }
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await authService.signUpWithPassword(
+          email: email, password: password);
+      if (response.user != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LengkapiProfile(),
+          ),
+        );
+      }
+    } catch (e) {
+      if (e is AuthApiException && e.message.contains('email')) {
+        CustomSnackbar.show(
+          context: context,
+          message: "Email sudah terdaftar",
+          type: SnackbarType.info,
+        );
+      } else {
+        CustomSnackbar.show(
+          context: context,
+          message: "Gagal mendaftar: $e",
+          type: SnackbarType.error,
+        );
+      }
+    } finally {
+      setState(() => _isLoading = false);
     }
   }
 
@@ -69,33 +109,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 SizedBox(height: 40),
 
-                // Foto Profil
-                GestureDetector(
-                  onTap: _pickImage,
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundColor: ColorsApp.grey,
-                    backgroundImage: _image != null ? FileImage(_image!) : null,
-                    child: _image == null
-                        ? Icon(
-                            Icons.camera_alt,
-                            color: AppColors.background,
-                            size: 30,
-                          )
-                        : null,
-                  ),
-                ),
-                SizedBox(height: 24),
+                // SizedBox(height: 24),
 
                 // TextFormField Nama
-                SharedTextFormField(
-                  Controller: _nameController,
-                  labelText: 'Nama',
-                  readOnly: false,
-                  obsecureText: false,
-                ),
+                // SharedTextFormField(
+                //   Controller: _nameController,
+                //   labelText: 'Nama',
+                //   readOnly: false,
+                //   obsecureText: false,
+                // ),
 
-                SizedBox(height: 20),
+                // SizedBox(height: 20),
 
                 // TextFormField Email
                 SharedTextFormField(
@@ -148,14 +172,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: SharedButtton(
-                    title: Text(
-                      'Daftar',
-                      style: GoogleFonts.poppins(
-                          color: ColorsApp.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
-                    ),
-                    onPressed: () {},
+                    title: _isLoading
+                        ? CircularProgressIndicator()
+                        : Text(
+                            'Daftar',
+                            style: GoogleFonts.poppins(
+                                color: ColorsApp.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                    onPressed: _isLoading ? () {} : _register,
                   ),
                 ),
 

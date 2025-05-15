@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:generation_stars/screens/MainNavigationScreen.dart';
 import 'package:generation_stars/screens/authentication/forgot_pass_screen.dart';
 import 'package:generation_stars/screens/authentication/register_screen.dart';
-import 'package:generation_stars/screens/home_screen.dart';
 import 'package:generation_stars/shared/shared_button.dart';
 import 'package:generation_stars/shared/shared_text_form_field.dart';
 import 'package:generation_stars/theme/colors.dart';
@@ -71,6 +70,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: 'Email',
                   readOnly: false,
                   obsecureText: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Email tidak boleh kosong';
+                    }
+                    return null;
+                  },
                 ),
 
                 SizedBox(height: 30),
@@ -90,7 +95,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       });
                     },
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Password tidak boleh kosong';
+                    }
+                    return null;
+                  },
                 ),
+
                 SizedBox(height: 10),
 
                 // Lupa Password
@@ -118,29 +130,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+
                 SizedBox(height: 24),
 
                 // Tombol Masuk
-                SizedBox(
-                  width: double.infinity,
-                  child: SharedButtton(
-                    title: Text(
-                      'Masuk',
-                      style: GoogleFonts.poppins(
-                          color: ColorsApp.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MainNavigationScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                _widgetButton(),
+
                 SizedBox(height: 16),
 
                 // Sudah punya akun?
@@ -183,6 +178,35 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildInputForm() {
+    return Column(
+      children: [],
+    );
+  }
+
+  Widget _widgetButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: SharedButtton(
+        title: Text(
+          'Masuk',
+          style: GoogleFonts.poppins(
+              color: ColorsApp.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 16),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MainNavigationScreen(),
+            ),
+          );
+        },
       ),
     );
   }
