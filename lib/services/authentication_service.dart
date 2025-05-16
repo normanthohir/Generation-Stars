@@ -4,7 +4,7 @@ class AuthService {
   final supabase = Supabase.instance.client;
 
   /// 📌 **Login dengan Email dan Password**
-  Future<AuthResponse> signInWithPassword({
+  Future<AuthResponse> logIn({
     required String email,
     required String password,
   }) async {
@@ -13,10 +13,13 @@ class AuthService {
   }
 
   /// 📌 **register dengan email dan PAssword**
-  Future<AuthResponse> signUpWithPassword({
+  Future<AuthResponse> regiSter({
     required String email,
     required String password,
   }) async {
     return await supabase.auth.signUp(email: email, password: password);
   }
+
+  // 📌 **logout**
+  Future<void> logOut() async => await supabase.auth.signOut();
 }

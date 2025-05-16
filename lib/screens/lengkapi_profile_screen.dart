@@ -2,14 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:generation_stars/screens/MainNavigationScreen.dart';
-import 'package:generation_stars/shared/shared_appbar.dart';
+import 'package:generation_stars/services/authentication_service.dart';
+import 'package:generation_stars/shared/shared_CircularProgres.dart';
 import 'package:generation_stars/shared/shared_button.dart';
 import 'package:generation_stars/shared/shared_text_form_field.dart';
 import 'package:generation_stars/theme/colors.dart';
+import 'package:generation_stars/widgets/widget_background.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:generation_stars/utils/date_utils.dart' as date_util;
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class LengkapiProfile extends StatefulWidget {
   LengkapiProfile({super.key});
@@ -19,7 +25,6 @@ class LengkapiProfile extends StatefulWidget {
 }
 
 class _LengkapiProfileState extends State<LengkapiProfile> {
-  final _formKey = GlobalKey<FormState>();
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _tinggibadanController = TextEditingController();
   final TextEditingController _beratbadanController = TextEditingController();
@@ -27,14 +32,16 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
   final TextEditingController _tanggallahirController = TextEditingController();
   final TextEditingController _tanggalkehamilanController =
       TextEditingController();
+  File? _image;
   DateTime? _birthDate;
   DateTime? _pregnancyDate;
-  File? _image;
+
+  final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
@@ -42,36 +49,58 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
     }
   }
 
-  void _submitForm() {
+  Future<void> _submit() async {
     if (_formKey.currentState!.validate()) {
-      if (_birthDate == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Tanggal lahir harus diisi')),
-        );
-        return;
+      setState(() => _isLoading = true);
+      final supabase = Supabase.instance.client;
+      final userId = supabase.auth.currentUser!.id;
+      final nama = _namaController.text;
+      final tanggalLahir = _birthDate?.toIso8601String();
+      final tanggalKehamilan = _pregnancyDate!.toIso8601String();
+      final tinggiBadan = int.tryParse(_tinggibadanController.text);
+      final beratBadan = int.tryParse(_beratbadanController.text);
+      final alamat = _alamatController.text;
+
+      String imageUrl = '';
+
+      if (_image != null) {
+        try {
+          final bytes = await _image!.readAsBytes();
+          final path = 'foto-profile/$userId.jpg';
+
+          // Upload gambar
+          await supabase.storage.from('foto-profile').uploadBinary(path, bytes);
+
+          // Ambil URL publik
+          imageUrl = supabase.storage.from('foto-profile').getPublicUrl(path);
+        } catch (e) {
+          print("gagal upload foto profil: $e");
+        }
       }
 
-      // Proses penyimpanan data
-      final profileData = {
-        'name': _namaController.text,
-        'birthDate': _birthDate,
-        'pregnancyDate': _pregnancyDate,
-        'height': int.parse(_tinggibadanController.text),
-        'weight': int.parse(_beratbadanController.text),
-        'address': _alamatController.text,
-      };
+      try {
+        await supabase.from('profile').upsert({
+          'id': userId,
+          'nama': nama,
+          'tanggal_lahir': tanggalLahir,
+          'tanggal_kehamilan': tanggalKehamilan,
+          'tinggi_badan': tinggiBadan,
+          'berat_badan': beratBadan,
+          'alamat': alamat,
+          'foto_profile': imageUrl,
+        });
 
-      // Simpan data dan navigasi ke halaman utama
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Profil berhasil disimpan')),
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              MainNavigationScreen(), // Ganti dengan halaman utama Anda
-        ),
-      );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainNavigationScreen()),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal menyimpan profil: $e')),
+        );
+      } finally {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -79,65 +108,56 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsApp.white,
-      appBar: SharedAppbar(
-        title: 'Lengkapi Profile',
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          WidgetBackground(),
+          Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Header Informasi
+                  Text(
+                    'Lengkapi Profil',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      color: ColorsApp.black,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Data ini akan membantu kami memberikan pengalaman terbaik',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      color: ColorsApp.grey,
+                    ),
+                  ),
+
+                  SizedBox(height: 24),
+                  // Form Input
+                  _buildInputForm(),
+
+                  SizedBox(height: 40),
+                  // Tombol Simpan
+                  _buildSubmitButton(),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              // Header Informasi
-              _buildHeaderInfo(),
-              SizedBox(height: 24),
-
-              // Form Input
-              _buildInputForm(),
-              SizedBox(height: 40),
-
-              // Tombol Simpan
-              _buildSubmitButton(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeaderInfo() {
-    return Column(
-      children: [
-        Icon(
-          Icons.account_circle,
-          size: 80,
-          color: ColorsApp.hijau,
-        ),
-        SizedBox(height: 16),
-        Text(
-          'Lengkapi data diri Anda',
-          style: GoogleFonts.poppins(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: ColorsApp.text,
-          ),
-        ),
-        SizedBox(height: 8),
-        Text(
-          'Data ini akan membantu kami memberikan pengalaman terbaik',
-          textAlign: TextAlign.center,
-          style: GoogleFonts.poppins(
-            color: ColorsApp.text.withOpacity(0.7),
-          ),
-        ),
-      ],
     );
   }
 
   Widget _buildInputForm() {
     return Column(
       children: [
-// Foto Profil
+        // Foto Profil
         GestureDetector(
           onTap: _pickImage,
           child: CircleAvatar(
@@ -153,7 +173,7 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
                 : null,
           ),
         ),
-
+        SizedBox(height: 24),
         // Nama Lengkap
         SharedTextFormField(
           Controller: _namaController,
@@ -296,22 +316,18 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
     return SizedBox(
       width: double.infinity,
       child: SharedButtton(
-          title: Text(
-            'Simpan',
-            style: GoogleFonts.poppins(
-              color: ColorsApp.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
-          onPressed: _submitForm),
+        title: _isLoading
+            ? SharedCircularprogres()
+            : Text(
+                'Simpan',
+                style: GoogleFonts.poppins(
+                  color: ColorsApp.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
+        onPressed: _submit,
+      ),
     );
-  }
-
-  @override
-  void dispose() {
-    _tanggallahirController.dispose();
-    _tanggalkehamilanController.dispose();
-    super.dispose();
   }
 }

@@ -301,9 +301,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       //     _heightController.text.isEmpty ||
       //     _weightController.text.isEmpty ||
       //     _addressController.text.isEmpty) {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(content: Text('Harap isi semua field yang wajib')),
-      //   );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Harap isi semua field yang wajib')),
+      // );
       //   return;
       // }
 

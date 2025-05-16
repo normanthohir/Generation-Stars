@@ -14,6 +14,7 @@ class SharedTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool alignLabelWithHint;
   final int? maxLines;
+  final AutovalidateMode? autovalidateMode;
 
   const SharedTextFormField({
     super.key,
@@ -28,6 +29,7 @@ class SharedTextFormField extends StatelessWidget {
     this.keyboardType,
     this.alignLabelWithHint = false,
     this.maxLines = 1,
+    this.autovalidateMode,
   });
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class SharedTextFormField extends StatelessWidget {
       children: [
         TextFormField(
           maxLines: maxLines,
+          autovalidateMode: autovalidateMode,
           keyboardType: keyboardType,
           cursorColor: ColorsApp.text,
           style: GoogleFonts.poppins(color: ColorsApp.text),
