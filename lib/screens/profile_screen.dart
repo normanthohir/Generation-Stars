@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:generation_stars/screens/authentication/login_screen.dart';
 import 'package:generation_stars/screens/edit_profile_screen.dart';
 import 'package:generation_stars/screens/lengkapi_profile_screen.dart';
+import 'package:generation_stars/services/authentication_service.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:generation_stars/widgets/widget_custom_appBar_menu.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart'; // Pastikan import AppColors
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final auth = AuthService();
   final Map<String, dynamic> userData = {
     'name': 'Nurul Indah',
     'email': 'nurul.indah@example.com',
@@ -20,6 +28,7 @@ class ProfileScreen extends StatelessWidget {
     'address': 'Jl. Melati No. 12, Jakarta',
     'isProfileComplete': true,
   };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +69,14 @@ class ProfileScreen extends StatelessWidget {
                 value: 'Keluar akun',
                 label: ' keluar akun',
                 icon: FontAwesomeIcons.rightFromBracket,
-                onSelected: (context) {},
+                onSelected: (context) async {
+                  await auth.logOut();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    (route) => false,
+                  );
+                },
               ),
             ],
             iconColor: ColorsApp.black,

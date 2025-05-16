@@ -4,6 +4,7 @@ import 'package:generation_stars/screens/authentication/register_screen.dart';
 import 'package:generation_stars/shared/shared_button.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/widgets/widget_background.dart';
+import 'package:generation_stars/widgets/widget_page_transitions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -62,11 +63,8 @@ class WelcomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                           fontSize: 16),
                     ),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterScreen(),
-                      ),
+                    onPressed: () => Navigator.of(context).push(
+                      CustomPageTransitions.slideTransition(RegisterScreen()),
                     ),
                   ),
                 ),
@@ -75,12 +73,9 @@ class WelcomeScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
-                    },
+                    onPressed: () => Navigator.of(context).push(
+                      CustomPageTransitions.slideTransition(LoginScreen()),
+                    ),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: ColorsApp.hijau,
                       side: BorderSide(color: ColorsApp.hijau),
