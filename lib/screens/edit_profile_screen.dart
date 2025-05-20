@@ -1,12 +1,24 @@
+import 'dart:ffi';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:generation_stars/screens/MainNavigationScreen.dart';
+import 'package:generation_stars/screens/profile_screen.dart';
+import 'package:generation_stars/services/profile_service.dart';
+import 'package:generation_stars/shared/shared_CircularProgres.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:generation_stars/shared/shared_button.dart';
 import 'package:generation_stars/shared/shared_text_form_field.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:generation_stars/utils/date_utils.dart' as date_util;
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final Map<String, dynamic> initialData;
@@ -19,41 +31,94 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _nameController;
-  late final TextEditingController _heightController;
-  late final TextEditingController _weightController;
-  late final TextEditingController _addressController;
-  late final TextEditingController _birthDateController;
-  late final TextEditingController _pregnancyDateController;
-  DateTime? _birthDate;
-  DateTime? _pregnancyDate;
-  String? _photoUrl;
+  late final TextEditingController _namaController;
+  late final TextEditingController _tinggiBadanController;
+  late final TextEditingController _beratBadanController;
+  late final TextEditingController _alamatController;
+  late final TextEditingController _tanggalLahirController;
+  late final TextEditingController _tanggalKehamilanController;
+  DateTime? _tanggalLahir;
+  DateTime? _tanggalKehamilan;
+  String? _fotoProfile;
+  File? _pilihGambar;
+  bool _isLoading = false;
+  final userService = UserService();
 
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.initialData['name']);
-    _heightController =
-        TextEditingController(text: widget.initialData['height']?.toString());
-    _weightController =
-        TextEditingController(text: widget.initialData['weight']?.toString());
-    _addressController =
-        TextEditingController(text: widget.initialData['address']);
-    _birthDateController = TextEditingController();
-    _pregnancyDateController = TextEditingController();
-    _photoUrl = widget.initialData['photoUrl'];
+    _namaController = TextEditingController(text: widget.initialData['nama']);
+    _tinggiBadanController = TextEditingController(
+        text: widget.initialData['tinggi_badan']?.toString());
+    _beratBadanController = TextEditingController(
+        text: widget.initialData['berat_badan']?.toString());
+    _alamatController =
+        TextEditingController(text: widget.initialData['alamat']);
+    _tanggalLahirController = TextEditingController();
+    _tanggalKehamilanController = TextEditingController();
+    _fotoProfile = widget.initialData['foto_profile'];
 
     // Initialize date values
-    if (widget.initialData['birthDate'] != null) {
-      _birthDate = widget.initialData['birthDate'];
-      _birthDateController.text =
-          DateFormat('dd MMMM yyyy').format(_birthDate!);
+    if (widget.initialData['tanggal_lahir'] != null) {
+      _tanggalLahir = DateTime.parse(widget.initialData['tanggal_lahir']);
+      _tanggalLahirController.text =
+          DateFormat('dd MMMM yyyy').format(_tanggalLahir!);
     }
 
-    if (widget.initialData['pregnancyDate'] != null) {
-      _pregnancyDate = widget.initialData['pregnancyDate'];
-      _pregnancyDateController.text =
-          DateFormat('dd MMMM yyyy').format(_pregnancyDate!);
+    if (widget.initialData['tanggal_kehamilan'] != null) {
+      _tanggalKehamilan =
+          DateTime.parse(widget.initialData['tanggal_kehamilan']);
+      _tanggalKehamilanController.text =
+          DateFormat('dd MMMM yyyy').format(_tanggalKehamilan!);
+    }
+  }
+
+  Future<void> _ubahFotoProfile() async {
+    final picker = ImagePicker();
+    final pilihFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pilihFile != null) {
+      setState(() {
+        _pilihGambar = File(pilihFile.path);
+      });
+    }
+  }
+
+  void _saveProfile() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() => _isLoading = true);
+      try {
+        await userService.updateProfile(
+          nama: _namaController.text,
+          tanggalLahir: _tanggalLahirController.text,
+          tanggalKehamilan: _tanggalKehamilanController.text,
+          tinggiBadan: int.parse(_tinggiBadanController.text),
+          beratBadan: int.parse(_beratBadanController.text),
+          alamat: _alamatController.text,
+          fotoProfile: _pilihGambar,
+        );
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            message: "Profil berhasil diubah",
+          ),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MainNavigationScreen(initialPage: 3)),
+        );
+      } catch (e) {
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.error(
+            message: "Gagal menyimpan profil: $e",
+          ),
+        );
+      } finally {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -67,19 +132,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-        child: Column(
-          children: [
-            // Foto Profil
-            _buildProfilePhotoSection(),
-            SizedBox(height: 24),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              // Foto Profil
+              _buildProfilePhotoSection(),
+              SizedBox(height: 24),
 
-            // Form Edit
-            _buildEditForm(),
-            SizedBox(height: 40),
+              // Form Edit
+              _buildEditForm(),
+              SizedBox(height: 40),
 
-            // Tombol Simpan
-            _buildSaveButton(),
-          ],
+              // Tombol Simpan
+              _buildSaveButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -93,21 +161,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           children: [
             CircleAvatar(
               radius: 50,
-              backgroundImage: _photoUrl != null
-                  ? AssetImage(_photoUrl!)
-                  : AssetImage('assets/images/person.png') as ImageProvider,
+              backgroundImage: _pilihGambar != null
+                  ? FileImage(_pilihGambar!) as ImageProvider<Object>
+                  : _fotoProfile != null
+                      ? NetworkImage(_fotoProfile!) as ImageProvider<Object>
+                      : const AssetImage('assets/images/no_profile.jpg')
+                          as ImageProvider<Object>,
             ),
             Positioned(
               right: 0,
               bottom: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: ColorsApp.hijau,
+                  color: ColorsApp.hijauTua,
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
                   icon: Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                  onPressed: _changePhoto,
+                  onPressed: _ubahFotoProfile,
                 ),
               ),
             ),
@@ -123,145 +194,142 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Widget _buildEditForm() {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          // Nama
-          SharedTextFormField(
-            Controller: _nameController,
-            labelText: 'Nama',
-            prefixIcon: Icon(Icons.person),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Nama tidak boleh kosong';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 24),
+    return Column(
+      children: [
+        // Nama
+        SharedTextFormField(
+          Controller: _namaController,
+          labelText: 'Nama',
+          prefixIcon: Icon(Icons.person),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Nama tidak boleh kosong';
+            }
+            return null;
+          },
+        ),
+        SizedBox(height: 24),
 
-          // Tanggal Lahir
-          SharedTextFormField(
-            Controller: _birthDateController,
-            labelText: 'Tanggal Lahir',
-            readOnly: true,
-            prefixIcon: Icon(Icons.cake),
-            suffixIcon: Icon(Icons.calendar_month),
-            onTap: () async {
-              final selectedDate = await date_util.DateUtils.selectDate(
-                context: context,
-                initialDate: _birthDate ?? DateTime(2000),
-                firstDate: DateTime(
-                    1900), // Changed from 1999 to 1900 for more reasonable range
-                lastDate: DateTime.now(),
-                fieldName: 'Tanggal Lahir',
-              );
-              if (selectedDate != null) {
-                setState(() {
-                  _birthDate = selectedDate;
-                  _birthDateController.text =
-                      DateFormat('dd MMMM yyyy').format(selectedDate);
-                });
-              }
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Tanggal lahir harus diisi';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 24),
+        // Tanggal Lahir
+        SharedTextFormField(
+          Controller: _tanggalLahirController,
+          labelText: 'Tanggal Lahir',
+          readOnly: true,
+          prefixIcon: Icon(Icons.cake),
+          suffixIcon: Icon(Icons.calendar_month),
+          onTap: () async {
+            final selectedDate = await date_util.DateUtils.selectDate(
+              context: context,
+              initialDate: _tanggalLahir ?? DateTime(2000),
+              firstDate: DateTime(
+                  1900), // Changed from 1999 to 1900 for more reasonable range
+              lastDate: DateTime.now(),
+              fieldName: 'Tanggal Lahir',
+            );
+            if (selectedDate != null) {
+              setState(() {
+                _tanggalLahir = selectedDate;
+                _tanggalLahirController.text =
+                    DateFormat('dd MMMM yyyy').format(selectedDate);
+              });
+            }
+          },
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Tanggal lahir harus diisi';
+            }
+            return null;
+          },
+        ),
+        SizedBox(height: 24),
 
-          // Tanggal Kehamilan
-          SharedTextFormField(
-            Controller: _pregnancyDateController,
-            labelText: 'Tanggal Kehamilan (Opsional)',
-            readOnly: true,
-            prefixIcon: Icon(Icons.child_friendly),
-            suffixIcon: Icon(Icons.calendar_month),
-            onTap: () async {
-              final selectedDate = await date_util.DateUtils.selectDate(
-                context: context,
-                initialDate: _pregnancyDate ?? DateTime.now(),
-                firstDate: DateTime.now().subtract(Duration(days: 280)),
-                lastDate: DateTime.now(),
-                fieldName: 'Tanggal Kehamilan',
-              );
-              if (selectedDate != null) {
-                setState(() {
-                  _pregnancyDate = selectedDate;
-                  _pregnancyDateController.text =
-                      DateFormat('dd MMMM yyyy').format(selectedDate);
-                });
-              }
-            },
-          ),
-          SizedBox(height: 24),
+        // Tanggal Kehamilan
+        SharedTextFormField(
+          Controller: _tanggalKehamilanController,
+          labelText: 'Tanggal Kehamilan ',
+          readOnly: true,
+          prefixIcon: Icon(Icons.child_friendly),
+          suffixIcon: Icon(Icons.calendar_month),
+          onTap: () async {
+            final selectedDate = await date_util.DateUtils.selectDate(
+              context: context,
+              initialDate: _tanggalKehamilan ?? DateTime.now(),
+              firstDate: DateTime.now().subtract(Duration(days: 280)),
+              lastDate: DateTime.now(),
+              fieldName: 'Tanggal Kehamilan',
+            );
+            if (selectedDate != null) {
+              setState(() {
+                _tanggalKehamilan = selectedDate;
+                _tanggalKehamilanController.text =
+                    DateFormat('dd MMMM yyyy').format(selectedDate);
+              });
+            }
+          },
+        ),
+        SizedBox(height: 24),
 
-          // Tinggi & Berat Badan
-          Row(
-            children: [
-              Expanded(
-                child: SharedTextFormField(
-                  Controller: _heightController,
-                  labelText: 'Tinggi Badan (cm)',
-                  keyboardType: TextInputType.number,
-                  prefixIcon: Icon(Icons.height),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Tinggi harus diisi';
-                    }
-                    if (int.tryParse(value) == null) {
-                      return 'Harus berupa angka';
-                    }
-                    final height = int.parse(value);
-                    if (height < 100 || height > 250) {
-                      return 'Tinggi badan tidak valid';
-                    }
-                    return null;
-                  },
-                ),
+        // Tinggi & Berat Badan
+        Row(
+          children: [
+            Expanded(
+              child: SharedTextFormField(
+                Controller: _tinggiBadanController,
+                labelText: 'Tinggi Badan (cm)',
+                keyboardType: TextInputType.number,
+                prefixIcon: Icon(Icons.height),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Tinggi harus diisi';
+                  }
+                  if (int.tryParse(value) == null) {
+                    return 'Harus berupa angka';
+                  }
+                  final height = int.parse(value);
+                  if (height < 100 || height > 250) {
+                    return 'Tinggi badan tidak valid';
+                  }
+                  return null;
+                },
               ),
-              SizedBox(width: 16),
-              Expanded(
-                child: SharedTextFormField(
-                  Controller: _weightController,
-                  labelText: 'Berat Badan (kg)',
-                  keyboardType: TextInputType.number,
-                  prefixIcon: Icon(Icons.monitor_weight),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Berat badan harus diisi';
-                    }
-                    return null;
-                  },
-                ),
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: SharedTextFormField(
+                Controller: _beratBadanController,
+                labelText: 'Berat Badan (kg)',
+                keyboardType: TextInputType.number,
+                prefixIcon: Icon(Icons.monitor_weight),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Berat badan harus diisi';
+                  }
+                  return null;
+                },
               ),
-            ],
-          ),
-          SizedBox(height: 24),
+            ),
+          ],
+        ),
+        SizedBox(height: 24),
 
-          // Alamat
-          SharedTextFormField(
-            Controller: _addressController,
-            labelText: 'Alamat Lengkap',
-            maxLines: 3,
-            prefixIcon: Icon(Icons.location_on),
-            alignLabelWithHint: true,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Alamat harus diisi';
-              }
-              if (value.length < 10) {
-                return 'Alamat terlalu pendek';
-              }
-              return null;
-            },
-          ),
-        ],
-      ),
+        // Alamat
+        SharedTextFormField(
+          Controller: _alamatController,
+          labelText: 'Alamat Lengkap',
+          maxLines: 3,
+          prefixIcon: Icon(Icons.location_on),
+          alignLabelWithHint: true,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Alamat harus diisi';
+            }
+            if (value.length < 10) {
+              return 'Alamat terlalu pendek';
+            }
+            return null;
+          },
+        ),
+      ],
     );
   }
 
@@ -269,67 +337,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return SizedBox(
       width: double.infinity,
       child: SharedButtton(
-        title: Text(
-          'Simpan',
-          style: GoogleFonts.poppins(
-            color: ColorsApp.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-          ),
-        ),
+        title: _isLoading
+            ? SharedCircularprogres()
+            : Text(
+                'Simpan',
+                style: GoogleFonts.poppins(
+                  color: ColorsApp.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
         onPressed: _saveProfile,
       ),
     );
   }
 
-  Future<void> _changePhoto() async {
-    // Implementasi perubahan foto profil
-    // ...
-  }
-
-  void _saveProfile() {
-    if (_formKey.currentState!.validate()) {
-      // if (_birthDate == null) {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(content: Text('Tanggal lahir harus diisi')),
-      //   );
-      //   return;
-      // }
-
-      // Validasi form
-      // if (_nameController.text.isEmpty ||
-      //     _heightController.text.isEmpty ||
-      //     _weightController.text.isEmpty ||
-      //     _addressController.text.isEmpty) {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text('Harap isi semua field yang wajib')),
-      // );
-      //   return;
-      // }
-
-      // Simpan data
-      final updatedData = {
-        'name': _nameController.text,
-        'birthDate': _birthDate,
-        'pregnancyDate': _pregnancyDate,
-        'height': int.parse(_heightController.text),
-        'weight': int.parse(_weightController.text),
-        'address': _addressController.text,
-        'photoUrl': _photoUrl,
-      };
-
-      Navigator.pop(context, updatedData);
-    }
-  }
-
   @override
   void dispose() {
-    _nameController.dispose();
-    _heightController.dispose();
-    _weightController.dispose();
-    _addressController.dispose();
-    _birthDateController.dispose();
-    _pregnancyDateController.dispose();
+    _namaController.dispose();
+    _tinggiBadanController.dispose();
+    _beratBadanController.dispose();
+    _alamatController.dispose();
+    _tanggalLahirController.dispose();
+    _tanggalKehamilanController.dispose();
     super.dispose();
   }
 }

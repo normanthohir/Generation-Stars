@@ -49,7 +49,7 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
     }
   }
 
-  Future<void> _submit() async {
+  Future<void> _simpan() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
       final supabase = Supabase.instance.client;
@@ -61,12 +61,13 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
       final beratBadan = int.tryParse(_beratbadanController.text);
       final alamat = _alamatController.text;
 
-      String imageUrl = '';
+      String? imageUrl;
 
       if (_image != null) {
         try {
           final bytes = await _image!.readAsBytes();
-          final path = 'foto-profile/$userId.jpg';
+          final path =
+              'foto-profile/${userId}_${DateTime.now().millisecondsSinceEpoch}.jpg';
 
           // Upload gambar
           await supabase.storage.from('foto-profile').uploadBinary(path, bytes);
@@ -89,14 +90,25 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
           'alamat': alamat,
           'foto_profile': imageUrl,
         });
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            message: "Lengkapi profile berhasil",
+          ),
+        );
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MainNavigationScreen()),
+          MaterialPageRoute(
+            builder: (context) => MainNavigationScreen(),
+          ),
         );
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal menyimpan profil: $e')),
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.error(
+            message: "Gagal menyimpan profil: $e",
+          ),
         );
       } finally {
         setState(() => _isLoading = false);
@@ -326,7 +338,7 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
                   fontSize: 16,
                 ),
               ),
-        onPressed: _submit,
+        onPressed: _simpan,
       ),
     );
   }

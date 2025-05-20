@@ -9,7 +9,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  MainNavigationScreen({Key? key}) : super(key: key);
+  final int initialPage;
+  MainNavigationScreen({Key? key, this.initialPage = 0}) : super(key: key);
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
@@ -17,6 +18,11 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialPage;
+  }
 
   final List<Widget> _pages = <Widget>[
     HomeScreen(),
