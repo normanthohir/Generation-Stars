@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:generation_stars/screens/MainNavigationScreen.dart';
 import 'package:generation_stars/screens/authentication/welcome_screen.dart';
 import 'package:generation_stars/screens/lengkapi_profile_screen.dart';
+import 'package:generation_stars/shared/shared_CircularProgres.dart';
 import 'package:generation_stars/theme/colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -180,15 +182,26 @@ class _SplashScreenState extends State<SplashScreen>
                   opacity: _fadeAnimation,
                   child: SlideTransition(
                     position: _slideAnimation,
-                    child: Text(
-                      'Generation Stars',
-                      style: GoogleFonts.poppins(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: _controller.value < 0.6
-                            ? Colors.white
-                            : ColorsApp.hijau,
-                      ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Generation Stars',
+                          style: GoogleFonts.poppins(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: _controller.value < 0.6
+                                ? Colors.white
+                                : ColorsApp.hijau,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        LoadingAnimationWidget.staggeredDotsWave(
+                          color: _controller.value < 0.6
+                              ? Colors.white
+                              : ColorsApp.hijau,
+                          size: 66,
+                        ),
+                      ],
                     ),
                   ),
                 ),

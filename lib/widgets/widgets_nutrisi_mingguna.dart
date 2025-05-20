@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:generation_stars/theme/colors.dart';
 
-class WidgetsNutrisiMingguan extends StatelessWidget {
+class WidgetsNutrisiMingguan extends StatefulWidget {
   final double totalKalori;
   final double totalProtein;
   final double totalKarbo;
@@ -22,55 +22,35 @@ class WidgetsNutrisiMingguan extends StatelessWidget {
         totalLemak = totalLemak ?? Random().nextDouble() * 100 + 30;
 
   @override
+  State<WidgetsNutrisiMingguan> createState() => _WidgetsNutrisiMingguanState();
+}
+
+class _WidgetsNutrisiMingguanState extends State<WidgetsNutrisiMingguan> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          // color: AppColors.background,
-          // borderRadius: BorderRadius.circular(20),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.grey.withOpacity(0.2),
-          //     blurRadius: 10,
-          //     offset: const Offset(0, 4),
-          //   )
-          // ],
-          ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Text(
-            'Progres Mingguan',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            'Kehamilan minggu ke 12',
-            style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-                fontWeight: FontWeight.w400),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _nutrisiBox('Kalori', '${totalKalori.toStringAsFixed(0)} kcal',
-                  Colors.orange),
-              _nutrisiBox('Protein', '${totalProtein.toStringAsFixed(1)} g',
-                  Colors.green),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _nutrisiBox(
-                  'Karbo', '${totalKarbo.toStringAsFixed(1)} g', Colors.blue),
-              _nutrisiBox(
-                  'Lemak', '${totalLemak.toStringAsFixed(1)} g', Colors.pink),
-            ],
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _nutrisiBox('Kalori',
+                '${widget.totalKalori.toStringAsFixed(0)} kcal', Colors.orange),
+            _nutrisiBox('Protein',
+                '${widget.totalProtein.toStringAsFixed(1)} g', Colors.green),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _nutrisiBox('Karbo', '${widget.totalKarbo.toStringAsFixed(1)} g',
+                Colors.blue),
+            _nutrisiBox('Lemak', '${widget.totalLemak.toStringAsFixed(1)} g',
+                Colors.pink),
+          ],
+        ),
+      ],
     );
   }
 

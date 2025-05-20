@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:generation_stars/screens/edukasi_screen.dart';
 import 'package:generation_stars/screens/tentang_aplikasi_screen.dart';
+import 'package:generation_stars/services/profile_service.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/widgets/widget_custom_appBar_menu.dart';
 import 'package:generation_stars/widgets/widget_image_source_modal.dart';
@@ -25,15 +26,29 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _result;
   Map<String, dynamic>? _nutrisi;
 
+  // Map<String, dynamic>? _userData;
+  Map<String, dynamic>? _profileData;
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
     TFLiteService.loadModel();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    final profile = await UserService.getCurrentUserProfile();
+    // final user = await UserService.getCurrentUserData();
+    setState(() {
+      // _userData = user;
+      _profileData = profile;
+      _isLoading = false;
+    });
   }
 
   Future<void> _processImage(ImageSource source) async {
-    final image =
-        await ImagePickerService.pickImage(source); // Pass source here
+    final image = await ImagePickerService.pickImage(source);
     if (image == null) return;
 
     setState(() => _image = image);
@@ -66,54 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: ColorsApp.white,
       appBar: SharedAppbar(
-        title: "Haii Nama Penguna👋",
+        title: _isLoading
+            ? 'Haii'
+            : 'Haii, ${_profileData?['nama'] ?? 'Pengguna'}👋',
         actions: [
-          CustomAppBarMenu(
-            iconItemColor: ColorsApp.hijauTua,
-            textColor: ColorsApp.hijauTua,
-            menuColor: ColorsApp.white,
-            items: [
-              AppBarMenuItem(
-                value: 'tentang',
-                label: 'Tentang',
-                icon: FontAwesomeIcons.circleInfo,
-                onSelected: (context) => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TentangAplikasiScreen())),
-              ),
-              AppBarMenuItem(
-                value: 'edukasi',
-                label: 'Edukasi',
-                icon: FontAwesomeIcons.book,
-                onSelected: (context) => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => EdukasiScreen())),
-              ),
-              AppBarMenuItem(
-                value: 'keluar',
-                label: 'Keluar',
-                icon: FontAwesomeIcons.rightFromBracket,
-                onSelected: (context) => showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text('Keluar Aplikasi'),
-                    content: Text('Apakah Anda yakin ingin keluar?'),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text('Batal'),
-                      ),
-                      TextButton(
-                        onPressed: () => exit(0),
-                        child: Text('Keluar'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-            iconColor: ColorsApp.black,
-          ),
+          // Costum appbar menu
+          _appBarMenu(),
         ],
       ),
       body: SingleChildScrollView(
@@ -122,7 +95,26 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                child: WidgetsNutrisiMingguan(),
+                child: Column(
+                  children: [
+                    Text(
+                      'Progres Mingguan',
+                      style: GoogleFonts.poppins(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
+                    _isLoading
+                        ? Text('Loading...')
+                        : Text(
+                            'Kehamilan minggu ke ${_hitungKehamilanPerminggu()}',
+                            style: GoogleFonts.poppins(
+                              fontSize: 13,
+                              color: ColorsApp.grey,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                    WidgetsNutrisiMingguan(),
+                  ],
+                ),
               ),
               SizedBox(height: 50),
               Text(
@@ -139,51 +131,106 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: GoogleFonts.poppins(fontSize: 15, color: ColorsApp.grey),
               ),
               SizedBox(height: 40),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => showModalBottomSheet(
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(20)),
-                      ),
-                      backgroundColor: Colors.white,
-                      builder: (context) => ImageSourceModal(
-                        onCameraSelected: () =>
-                            _processImage(ImageSource.camera),
-                        onGallerySelected: () =>
-                            _processImage(ImageSource.gallery),
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorsApp.hijau,
-                      foregroundColor: ColorsApp.white,
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          FontAwesomeIcons.cameraRetro,
-                          size: 24,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Pilih gambar',
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+              // button memilih gambar dari galery atau foto langsung
+              _buttonPilihGambar()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _appBarMenu() {
+    return CustomAppBarMenu(
+      iconItemColor: ColorsApp.hijauTua,
+      textColor: ColorsApp.hijauTua,
+      menuColor: ColorsApp.white,
+      items: [
+        AppBarMenuItem(
+          value: 'tentang',
+          label: 'Tentang',
+          icon: FontAwesomeIcons.circleInfo,
+          onSelected: (context) => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => TentangAplikasiScreen())),
+        ),
+        AppBarMenuItem(
+          value: 'edukasi',
+          label: 'Edukasi',
+          icon: FontAwesomeIcons.book,
+          onSelected: (context) => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => EdukasiScreen())),
+        ),
+        // AppBarMenuItem(
+        //   value: 'keluar',
+        //   label: 'Keluar',
+        //   icon: FontAwesomeIcons.rightFromBracket,
+        //   onSelected: (context) => showDialog(
+        //     context: context,
+        //     builder: (context) => AlertDialog(
+        //       title: Text('Keluar Aplikasi'),
+        //       content: Text('Apakah Anda yakin ingin keluar?'),
+        //       actions: [
+        //         TextButton(
+        //           onPressed: () => Navigator.pop(context),
+        //           child: Text('Batal'),
+        //         ),
+        //         TextButton(
+        //           onPressed: () => exit(0),
+        //           child: Text('Keluar'),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+      ],
+      iconColor: ColorsApp.black,
+    );
+  }
+
+  String _hitungKehamilanPerminggu() {
+    final startDate = DateTime.parse(_profileData!['tanggal_kehamilan']);
+    final weeks = DateTime.now().difference(startDate).inDays ~/ 7;
+    return weeks.toString();
+  }
+
+  Widget _buttonPilihGambar() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 40),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () => showModalBottomSheet(
+            context: context,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            backgroundColor: Colors.white,
+            builder: (context) => ImageSourceModal(
+              onCameraSelected: () => _processImage(ImageSource.camera),
+              onGallerySelected: () => _processImage(ImageSource.gallery),
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ColorsApp.hijau,
+            foregroundColor: ColorsApp.white,
+            padding: EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                FontAwesomeIcons.cameraRetro,
+                size: 24,
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Pilih gambar',
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 17,
                 ),
               ),
             ],
