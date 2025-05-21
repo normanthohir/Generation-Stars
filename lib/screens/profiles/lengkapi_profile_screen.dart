@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:generation_stars/screens/MainNavigationScreen.dart';
 import 'package:generation_stars/services/authentication_service.dart';
+import 'package:generation_stars/services/profile_service.dart';
 import 'package:generation_stars/shared/shared_CircularProgres.dart';
 import 'package:generation_stars/shared/shared_button.dart';
 import 'package:generation_stars/shared/shared_text_form_field.dart';
@@ -52,51 +53,21 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
   Future<void> _simpan() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
-      final supabase = Supabase.instance.client;
-      final userId = supabase.auth.currentUser!.id;
-      final nama = _namaController.text;
-      final tanggalLahir = _birthDate?.toIso8601String();
-      final tanggalKehamilan = _pregnancyDate!.toIso8601String();
-      final tinggiBadan = int.tryParse(_tinggibadanController.text);
-      final beratBadan = int.tryParse(_beratbadanController.text);
-      final alamat = _alamatController.text;
-
-      String? imageUrl;
-
-      if (_image != null) {
-        try {
-          final bytes = await _image!.readAsBytes();
-          final path =
-              'foto-profile/${userId}_${DateTime.now().millisecondsSinceEpoch}.jpg';
-
-          // Upload gambar
-          await supabase.storage.from('foto-profile').uploadBinary(path, bytes);
-
-          // Ambil URL publik
-          imageUrl = supabase.storage.from('foto-profile').getPublicUrl(path);
-        } catch (e) {
-          print("gagal upload foto profil: $e");
-        }
-      }
-
       try {
-        await supabase.from('profile').upsert({
-          'id': userId,
-          'nama': nama,
-          'tanggal_lahir': tanggalLahir,
-          'tanggal_kehamilan': tanggalKehamilan,
-          'tinggi_badan': tinggiBadan,
-          'berat_badan': beratBadan,
-          'alamat': alamat,
-          'foto_profile': imageUrl,
-        });
-        showTopSnackBar(
-          Overlay.of(context),
-          CustomSnackBar.success(
-            message: "Lengkapi profile berhasil",
-          ),
+        await UserService.lengkapiProfile(
+          nama: _namaController.text,
+          tanggalLahir: _tanggallahirController.text,
+          tanggalKehamilan: _tanggalkehamilanController.text,
+          tinggiBadan: int.parse(_tinggibadanController.text),
+          beratBadan: int.parse(_beratbadanController.text),
+          alamat: _alamatController.text,
+          fileGambar: _image,
         );
 
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(message: "Lengkapi profile berhasil"),
+        );
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -106,9 +77,7 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
       } catch (e) {
         showTopSnackBar(
           Overlay.of(context),
-          CustomSnackBar.error(
-            message: "Gagal menyimpan profil: $e",
-          ),
+          CustomSnackBar.error(message: "Gagal lengkapi profil: $e"),
         );
       } finally {
         setState(() => _isLoading = false);
@@ -343,3 +312,70 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
     );
   }
 }
+
+  // Future<void> _simpan() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     setState(() => _isLoading = true);
+  //     final supabase = Supabase.instance.client;
+  //     final userId = supabase.auth.currentUser!.id;
+  //     final nama = _namaController.text;
+  //     final tanggalLahir = _birthDate?.toIso8601String();
+  //     final tanggalKehamilan = _pregnancyDate!.toIso8601String();
+  //     final tinggiBadan = int.tryParse(_tinggibadanController.text);
+  //     final beratBadan = int.tryParse(_beratbadanController.text);
+  //     final alamat = _alamatController.text;
+
+  //     String? imageUrl;
+
+  //     if (_image != null) {
+  //       try {
+  //         final bytes = await _image!.readAsBytes();
+  //         final path =
+  //             'foto-profile/${userId}_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+  //         // Upload gambar
+  //         await supabase.storage.from('foto-profile').uploadBinary(path, bytes);
+
+  //         // Ambil URL publik
+  //         imageUrl = supabase.storage.from('foto-profile').getPublicUrl(path);
+  //       } catch (e) {
+  //         print("gagal upload foto profil: $e");
+  //       }
+  //     }
+
+  //     try {
+  //       await supabase.from('profile').upsert({
+  //         'id': userId,
+  //         'nama': nama,
+  //         'tanggal_lahir': tanggalLahir,
+  //         'tanggal_kehamilan': tanggalKehamilan,
+  //         'tinggi_badan': tinggiBadan,
+  //         'berat_badan': beratBadan,
+  //         'alamat': alamat,
+  //         'foto_profile': imageUrl,
+  //       });
+  //       showTopSnackBar(
+  //         Overlay.of(context),
+  //         CustomSnackBar.success(
+  //           message: "Lengkapi profile berhasil",
+  //         ),
+  //       );
+
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => MainNavigationScreen(),
+  //         ),
+  //       );
+  //     } catch (e) {
+  //       showTopSnackBar(
+  //         Overlay.of(context),
+  //         CustomSnackBar.error(
+  //           message: "Gagal menyimpan profil: $e",
+  //         ),
+  //       );
+  //     } finally {
+  //       setState(() => _isLoading = false);
+  //     }
+  //   }
+  // }

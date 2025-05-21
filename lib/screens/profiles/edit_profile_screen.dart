@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:generation_stars/screens/MainNavigationScreen.dart';
-import 'package:generation_stars/screens/profile_screen.dart';
+import 'package:generation_stars/screens/profiles/profile_screen.dart';
 import 'package:generation_stars/services/profile_service.dart';
 import 'package:generation_stars/shared/shared_CircularProgres.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
@@ -95,7 +95,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           tinggiBadan: int.parse(_tinggiBadanController.text),
           beratBadan: int.parse(_beratBadanController.text),
           alamat: _alamatController.text,
-          fotoProfile: _pilihGambar,
+          fileGambar: _pilihGambar,
         );
         showTopSnackBar(
           Overlay.of(context),

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:generation_stars/screens/authentication/login_screen.dart';
-import 'package:generation_stars/screens/edit_profile_screen.dart';
+import 'package:generation_stars/screens/profiles/edit_profile_screen.dart';
 import 'package:generation_stars/services/authentication_service.dart';
 import 'package:generation_stars/services/profile_service.dart';
 import 'package:generation_stars/theme/colors.dart';
@@ -214,14 +214,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           if (_profileData?['tanggal_kehamilan'] != null) ...[
                             SizedBox(height: 16),
                             LinearProgressIndicator(
-                              value: _calculatePregnancyProgress(),
+                              value: _hitungKemajuanKehamilan(),
                               backgroundColor: Colors.grey[350],
                               color: ColorsApp.hijau,
                               minHeight: 10,
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Usia Kehamilan: ${_calculatePregnancyWeek()} minggu',
+                              'Usia Kehamilan: ${_hitungKehamilanPerminggu()} minggu',
                               style: GoogleFonts.poppins(
                                 fontSize: 12,
                                 color: ColorsApp.black,
@@ -369,13 +369,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // Helper Functions
-  double _calculatePregnancyProgress() {
+  double _hitungKemajuanKehamilan() {
     final startDate = DateTime.parse(_profileData!['tanggal_kehamilan']);
     final totalDays = DateTime.now().difference(startDate).inDays;
     return (totalDays / 280).clamp(0.0, 1.0); // 280 hari = 40 minggu
   }
 
-  String _calculatePregnancyWeek() {
+  String _hitungKehamilanPerminggu() {
     final startDate = DateTime.parse(_profileData!['tanggal_kehamilan']);
     final weeks = DateTime.now().difference(startDate).inDays ~/ 7;
     return weeks.toString();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:generation_stars/screens/MainNavigationScreen.dart';
 import 'package:generation_stars/screens/authentication/welcome_screen.dart';
-import 'package:generation_stars/screens/lengkapi_profile_screen.dart';
+import 'package:generation_stars/screens/profiles/lengkapi_profile_screen.dart';
 import 'package:generation_stars/shared/shared_CircularProgres.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
