@@ -39,9 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadUserData() async {
     final profile = await UserService.getCurrentUserProfile();
-    // final user = await UserService.getCurrentUserData();
     setState(() {
-      // _userData = user;
       _profileData = profile;
       _isLoading = false;
     });
@@ -187,12 +185,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  String _hitungKehamilanPerminggu() {
-    final startDate = DateTime.parse(_profileData!['tanggal_kehamilan']);
-    final weeks = DateTime.now().difference(startDate).inDays ~/ 7;
-    return weeks.toString();
-  }
-
   Widget _buttonPilihGambar() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40),
@@ -238,5 +230,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  String _hitungKehamilanPerminggu() {
+    final startDate = DateTime.parse(_profileData!['tanggal_kehamilan']);
+    final weeks = DateTime.now().difference(startDate).inDays ~/ 7;
+    return weeks.toString();
   }
 }

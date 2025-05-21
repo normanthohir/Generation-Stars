@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:generation_stars/screens/MainNavigationScreen.dart';
 import 'package:generation_stars/screens/authentication/login_screen.dart';
-import 'package:generation_stars/screens/lengkapi_profile_screen.dart';
+import 'package:generation_stars/screens/profiles/lengkapi_profile_screen.dart';
 import 'package:generation_stars/services/authentication_service.dart';
 import 'package:generation_stars/shared/shared_CircularProgres.dart';
 import 'package:generation_stars/shared/shared_button.dart';

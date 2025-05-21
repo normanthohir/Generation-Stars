@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-import 'package:generation_stars/theme/colors.dart';
-
 class WidgetsNutrisiMingguan extends StatefulWidget {
   final double totalKalori;
   final double totalProtein;

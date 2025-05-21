@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:generation_stars/screens/detain_history_screen.dart';
+import 'package:generation_stars/screens/history/detain_history_screen.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:generation_stars/widgets/widget_background.dart';
