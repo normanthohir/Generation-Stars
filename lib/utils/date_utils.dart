@@ -11,7 +11,7 @@ class DateUtils {
   }) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      locale: Locale('id'),
+      // locale: Locale('id'),
       initialDate: initialDate,
       firstDate: firstDate ?? DateTime(1900),
       lastDate: lastDate ?? DateTime.now(),

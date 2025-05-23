@@ -17,7 +17,7 @@ class UserService {
     String? gambarUrl;
     try {
       if (fileGambar != null) {
-        final bytes = await fileGambar!.readAsBytes();
+        final bytes = await fileGambar.readAsBytes();
         final path =
             'foto-profile/${userId}_${DateTime.now().millisecondsSinceEpoch}.jpg';
         await supabase.storage.from('foto-profile').uploadBinary(path, bytes);
