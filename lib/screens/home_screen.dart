@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadUserData();
   }
 
+  // function untuk menampilkan data informasi profile
   Future<void> _loadUserData() async {
     final profile = await UserService.getCurrentUserProfile();
     setState(() {
@@ -45,6 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  // function  untuk memprosess gambar untuk ddeteksi nutrisi
+  // atau mencocokan jenismakan dari model Tflite CNN dengan dara nutrisi makanan di file CSV dengan label
   Future<void> _processImage(ImageSource source) async {
     final image = await ImagePickerService.pickImage(source);
     if (image == null) return;
@@ -129,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: GoogleFonts.poppins(fontSize: 15, color: ColorsApp.grey),
               ),
               SizedBox(height: 40),
-              // button memilih gambar dari galery atau foto langsung
+              // button untuk memilih sumber gambar
               _buttonPilihGambar()
             ],
           ),
@@ -138,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+// Widget costum appbar menu
   Widget _appBarMenu() {
     return CustomAppBarMenu(
       iconItemColor: ColorsApp.hijauTua,
@@ -158,33 +162,12 @@ class _HomeScreenState extends State<HomeScreen> {
           onSelected: (context) => Navigator.push(context,
               MaterialPageRoute(builder: (context) => EdukasiScreen())),
         ),
-        // AppBarMenuItem(
-        //   value: 'keluar',
-        //   label: 'Keluar',
-        //   icon: FontAwesomeIcons.rightFromBracket,
-        //   onSelected: (context) => showDialog(
-        //     context: context,
-        //     builder: (context) => AlertDialog(
-        //       title: Text('Keluar Aplikasi'),
-        //       content: Text('Apakah Anda yakin ingin keluar?'),
-        //       actions: [
-        //         TextButton(
-        //           onPressed: () => Navigator.pop(context),
-        //           child: Text('Batal'),
-        //         ),
-        //         TextButton(
-        //           onPressed: () => exit(0),
-        //           child: Text('Keluar'),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ],
       iconColor: ColorsApp.black,
     );
   }
 
+// Widget  untuk memilih sumber gambar
   Widget _buttonPilihGambar() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40),
@@ -232,6 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // menghitung usia kehamilan perminggu
   String _hitungKehamilanPerminggu() {
     final startDate = DateTime.parse(_profileData!['tanggal_kehamilan']);
     final weeks = DateTime.now().difference(startDate).inDays ~/ 7;

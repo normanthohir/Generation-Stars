@@ -108,6 +108,7 @@ class ResultScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 16),
+                            // menampilkan hasil nutrisi berdasarkan gambar yang di upload
                             _buildNutritionItem(
                                 'Kalori', "${nutrisi!['kalori']} kkal"),
                             _buildNutritionItem(
@@ -239,6 +240,7 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
+  // widget untuk menampilkan hasil nutrisi
   Widget _buildNutritionItem(String title, String value) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 6),

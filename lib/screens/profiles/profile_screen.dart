@@ -279,6 +279,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  //widget Costum appbar menu halaman profile
   Widget _appBarMenu() {
     return CustomAppBarMenu(
       iconItemColor: ColorsApp.hijauTua,
@@ -329,6 +330,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  // widget menampilkan struktur informasi profile
   Widget _buildInfoRow({
     required IconData icon,
     required String label,
@@ -366,13 +368,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // Helper Functions
+  // function untuk menghitung kemanjua kehamilan
   double _hitungKemajuanKehamilan() {
     final startDate = DateTime.parse(_profileData!['tanggal_kehamilan']);
     final totalDays = DateTime.now().difference(startDate).inDays;
     return (totalDays / 280).clamp(0.0, 1.0); // 280 hari = 40 minggu
   }
 
+// function untuk menghitung kehamilan perminggu
   String _hitungKehamilanPerminggu() {
     final startDate = DateTime.parse(_profileData!['tanggal_kehamilan']);
     final weeks = DateTime.now().difference(startDate).inDays ~/ 7;
