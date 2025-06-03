@@ -6,6 +6,9 @@ class WidgetsNutrisiMingguan extends StatefulWidget {
   final double totalProtein;
   final double totalKarbo;
   final double totalLemak;
+  final double totalSerat;
+  final double totalZatbesi;
+  final double totaKlalium;
 
   // Constructor dengan nilai default random
   WidgetsNutrisiMingguan({
@@ -13,11 +16,17 @@ class WidgetsNutrisiMingguan extends StatefulWidget {
     double? totalProtein,
     double? totalKarbo,
     double? totalLemak,
+    double? totalSerat,
+    double? totalZatbesi,
+    double? totaKlalium,
     super.key,
   })  : totalKalori = totalKalori ?? Random().nextDouble() * 2000 + 1000,
         totalProtein = totalProtein ?? Random().nextDouble() * 100 + 30,
         totalKarbo = totalKarbo ?? Random().nextDouble() * 300 + 100,
-        totalLemak = totalLemak ?? Random().nextDouble() * 100 + 30;
+        totalLemak = totalLemak ?? Random().nextDouble() * 100 + 30,
+        totalSerat = totalSerat ?? Random().nextDouble() * 100 + 30,
+        totalZatbesi = totalZatbesi ?? Random().nextDouble() * 100 + 30,
+        totaKlalium = totaKlalium ?? Random().nextDouble() * 100 + 30;
 
   @override
   State<WidgetsNutrisiMingguan> createState() => _WidgetsNutrisiMingguanState();
@@ -28,7 +37,7 @@ class _WidgetsNutrisiMingguanState extends State<WidgetsNutrisiMingguan> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -38,7 +47,7 @@ class _WidgetsNutrisiMingguanState extends State<WidgetsNutrisiMingguan> {
                 '${widget.totalProtein.toStringAsFixed(1)} g', Colors.green),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -46,6 +55,24 @@ class _WidgetsNutrisiMingguanState extends State<WidgetsNutrisiMingguan> {
                 Colors.blue),
             _nutrisiBox('Lemak', '${widget.totalLemak.toStringAsFixed(1)} g',
                 Colors.pink),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _nutrisiBox('Serat', '${widget.totalSerat.toStringAsFixed(1)} g',
+                Colors.purpleAccent),
+            _nutrisiBox('Zat Besi',
+                '${widget.totalZatbesi.toStringAsFixed(1)} g', Colors.grey),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _nutrisiBox('Kalium', '${widget.totaKlalium.toStringAsFixed(1)} g',
+                Colors.amber),
           ],
         ),
       ],

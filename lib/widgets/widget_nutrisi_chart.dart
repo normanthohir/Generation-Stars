@@ -14,14 +14,13 @@ class _NutrisiChartWidgetState extends State<NutrisiChartWidget> {
 
   final Map<String, Map<String, double>> nutrisiData = {
     'Trimester 1': {
-      'Kalori': 1800,
+      'Kalori': 800,
       'Protein': 60,
       'Lemak': 50,
       'Karbohidrat': 200,
       'Serat': 25,
       'Zat Besi': 18,
-      'Asam Folat': 400,
-      'Kalsium': 1000,
+      'Kalium': 400,
     },
     'Trimester 2': {
       'Kalori': 2200,
@@ -30,8 +29,7 @@ class _NutrisiChartWidgetState extends State<NutrisiChartWidget> {
       'Karbohidrat': 250,
       'Serat': 30,
       'Zat Besi': 27,
-      'Asam Folat': 500,
-      'Kalsium': 1200,
+      'Kalium': 1200,
     },
     'Trimester 3': {
       'Kalori': 2400,
@@ -40,8 +38,7 @@ class _NutrisiChartWidgetState extends State<NutrisiChartWidget> {
       'Karbohidrat': 270,
       'Serat': 35,
       'Zat Besi': 30,
-      'Asam Folat': 550,
-      'Kalsium': 1300,
+      'Kalium': 1300,
     },
   };
 
@@ -62,7 +59,7 @@ class _NutrisiChartWidgetState extends State<NutrisiChartWidget> {
                   value: trimester,
                   child: Text(
                     trimester,
-                    style: TextStyle(color: AppColors.heading),
+                    style: TextStyle(color: ColorsApp.hijauTua),
                   ),
                 );
               }).toList(),
@@ -102,7 +99,7 @@ class _NutrisiChartWidgetState extends State<NutrisiChartWidget> {
                                   currentData.keys.elementAt(value.toInt()),
                                   style: TextStyle(
                                     fontSize: 10,
-                                    color: AppColors.heading,
+                                    color: ColorsApp.hijauTua,
                                   ),
                                 ),
                               ),
@@ -118,7 +115,7 @@ class _NutrisiChartWidgetState extends State<NutrisiChartWidget> {
                         barRods: [
                           BarChartRodData(
                             toY: currentData.values.elementAt(index),
-                            color: AppColors.buttonText,
+                            color: ColorsApp.hijauTua,
                             width: 16,
                             borderRadius: BorderRadius.circular(4),
                           ),

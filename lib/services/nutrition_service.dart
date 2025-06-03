@@ -22,7 +22,7 @@ class NutritionService {
     print("🔍 Mencari label: '$cleanedLabel'");
 
     final match = data.firstWhere(
-      (item) => item['name'].toString().toLowerCase().trim() == cleanedLabel,
+      (item) => item['label'].toString().toLowerCase().trim() == cleanedLabel,
       orElse: () => {},
     );
 

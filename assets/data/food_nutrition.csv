@@ -1,6 +1,23 @@
-name;kalori;protein;lemak;karbohidrat;serat;zat_besi;asam_folat;kalsium;manfaat;peringatan
-BuahAnggur;160;2;15;9;7;0.6;81;12;Lemak sehat untuk perkembangan janin, kaya folat;Konsumsi dalam jumlah wajar karena tinggi kalori
-AyamGoreng;122;2;2;2;2;1.2;2;2;tidak sehaat di makan ibu hamil;komsumsi dalam jumlah berlebihan
-Bakso;100;1;1;1;1;0.1;31;1;daging bagus di makan oleh ibu ibu;kosmsumsi jangan berlebihan
-KueLapis;50;3;13;9;3;0.4;23;31;tidak sehaat di makan ibu hamil karena berminyak;komsumsi dalam jumlah berlebihan
-NasiGoreng;50;3;13;9;3;0.4;23;31;tidak sehaat di makan ibu hamil karena berminyak;komsumsi dalam jumlah berlebihan
+label;nama;jumlahpersajian;kalori;protein;lemak;karbohidrat;serat;zatbesi;kalium;vitamin;manfaat;peringatan
+AyamGoreng;Ayam Goreng;100 gram;260;21.93;14.55;10.76;1.4;0;323;-;Sumber protein tinggi untuk pertumbuhan dan perbaikan jaringan, mengandung kalium untuk kesehatan jantung;Tinggi lemak dan kalori, dapat meningkatkan kolesterol jika dikonsumsi berlebihan
+Bakso;Bakso;100 gram;114;5.3;3;16.4;0.1;1.9;0;A, B1;Sumber protein dan karbohidrat, mengandung vitamin A untuk kesehatan mata;Sering mengandung bahan pengawet dan MSG, perlu dikonsumsi secukupnya
+BuahAnggur;Buah Anggur;100 gram;30;0.5;0.2;6.8;1.2;1.1;0;B1, C;Mengandung antioksidan, baik untuk kesehatan jantung, sumber vitamin C untuk kekebalan tubuh;Mengandung gula alami tinggi, penderita diabetes perlu membatasi konsumsi
+BuahApel;Buah Apel;100 gram;58;0.3;0.4;14.9;2.6;0.3;130;B1, B2, B3, C;Tinggi serat untuk pencernaan, mengandung antioksidan, baik untuk kesehatan jantung;Biji apel mengandung sianida dalam jumlah kecil, sebaiknya tidak dikonsumsi
+BuahDelima;Buah Delima;100 gram;68;0.95;0.3;17.17;0.6;0;259;-;Tinggi antioksidan, baik untuk kesehatan jantung, membantu menurunkan tekanan darah;Dapat berinteraksi dengan obat pengencer darah, konsultasi dokter jika sedang minum obat
+BuahJeruk;Buah Jeruk;100 gram;45;0.9;0.2;11.2;1.4;0.4;472.1;B1, B2, B3, C;Tinggi vitamin C untuk kekebalan tubuh, serat baik untuk pencernaan, kalium untuk jantung;Asam sitrat dapat mengikis enamel gigi jika dikonsumsi berlebihan
+BuahMangga;Buah Mangga;100 gram;52;0.7;0;12.3;1.6;1;140;B1, B2, B3, C;Tinggi vitamin C dan A, baik untuk kekebalan tubuh dan kesehatan mata;Mengandung gula tinggi, penderita diabetes perlu membatasi konsumsi
+BuburAyam;Bubur Ayam;1 porsi (240 gram);372;27.56;12.39;36.12;1.9;0;406;-;Mudah dicerna, sumber protein dan karbohidrat, cocok untuk orang sakit;Relatif tinggi kalori dan natrium, perlu dikonsumsi secukupnya
+KueBolu;Kue Bolu;100 gram;297;7.3;4.3;57.7;0;0;141;-;Sumber energi cepat dari karbohidrat;Tinggi gula dan kalori, dapat menyebabkan lonjakan gula darah
+KueDadarGulung;Kue Dadar Gulung;1 potong;139;2.82;6.79;17.15;1.1;0;96;-;Mengandung protein dari telur dan kelapa;Tinggi lemak dan gula, sebaiknya dikonsumsi sesekali saja
+KueKlepon;Kue Klepon;100 gram;215;3.7;3.7;41.8;1;3.3;0;B1, B2, B3;Mengandung serat dari kelapa, sumber energi;Tinggi gula dari gula merah, tidak cocok untuk penderita diabetes
+KueLapis;Kue Lapis;1 potong;139;2.82;6.79;17.15;1.1;0;96;-;Sumber energi dari karbohidrat;Tinggi gula dan lemak, konsumsi berlebihan dapat meningkatkan berat badan
+KueRisoles;Kue Risoles;1 potong;96;6.33;3.75;8.66;0.4;0;109;-;Mengandung protein dari isian daging atau sayuran;Digoreng dalam minyak, tinggi lemak jenuh
+NasiGoreng;Nasi Goreng;200 gram;500;7;34.4;40.2;0.4;0.6;86;E, B2, B6;Sumber karbohidrat untuk energi, mengandung vitamin E;Sangat tinggi kalori dan lemak, dapat menyebabkan obesitas jika sering dikonsumsi
+PisangGoreng;Pisang Goreng;100 gram;252;1.47;13.27;36.07;2.9;0;508;-;Mengandung kalium untuk kesehatan jantung, sumber energi;Digoreng dengan minyak, tinggi lemak dan kalori
+Sate;Sate Ayam;100 gram;225;19.54;14.82;4.87;0;0;0;-;Tinggi protein untuk pertumbuhan otot;Proses pembakaran dapat menghasilkan senyawa karsinogenik, sebaiknya tidak terlalu gosong
+SayurAsem;Sayur Asem;100 gram;29;0.7;0.6;5;0.6;3.1;0;A, B1;Rendah kalori, mengandung serat dan vitamin, baik untuk pencernaan;Mengandung asam yang tinggi, dapat memicu asam lambung pada penderita maag
+SayurSop;Sayur Sop;100 gram;27;1.3;2;1;0.3;1.8;0;A, B1, C;Rendah kalori, kaya vitamin dan mineral dari sayuran;Kandungan natrium bisa tinggi tergantung bumbu, perhatikan bagi penderita hipertensi
+Soto;Soto;100 gram;38;3.60;2.30;1.80;0.20;1.70;0;-;Mengandung protein dan vitamin dari kaldu, mudah dicerna;Kandungan natrium tinggi dari garam dan penyedap, batasi konsumsi bagi penderita hipertensi
+TumisKacangPanjangTahu;Tumis Kacang Panjang Tahu;100 gram;85;6.2;4.5;8.1;2.8;1.2;245;A, C, K;Tinggi serat dan protein nabati, baik untuk pencernaan dan kesehatan tulang;Tahu dapat mengandung fitoestrogen, konsumsi berlebihan perlu dihindari pria dengan masalah hormonal
+TumisKangkung;Tumis Kangkung;1 porsi (85 gram);106;2.76;9.4;4.31;1.8;0;456;A, C, K;Tinggi vitamin A untuk mata, vitamin K untuk tulang, serat untuk pencernaan;Kangkung dapat menyerap logam berat dari air, pastikan berasal dari sumber yang bersih
+TumisTerong;Tumis Terong;1 porsi (50 gram);65;0.79;3.85;8.31;2.4;0;117;A, C, K, B6;Mengandung antioksidan nasunin, baik untuk kesehatan otak dan jantung;Terong mentah mengandung solanin yang beracun, pastikan dimasak dengan matang
