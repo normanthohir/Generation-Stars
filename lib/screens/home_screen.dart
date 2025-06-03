@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 child: Column(
                   children: [
                     Text(
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 5),
               Text(
                 'Deteksi Nutrisi Makanan',
                 style: GoogleFonts.poppins(
@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(fontSize: 15, color: ColorsApp.grey),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 25),
               // button untuk memilih sumber gambar
               _buttonPilihGambar()
             ],

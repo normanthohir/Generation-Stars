@@ -1,10 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:generation_stars/shared/shared_CircularProgres.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
+import 'package:generation_stars/shared/shared_button.dart';
 import 'package:generation_stars/theme/colors.dart';
-import 'package:google_fonts/google_fonts.dart'; // Pastikan sudah import AppColors
+import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart'; // Pastikan sudah import AppColors
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
   final File image;
   final String label;
   final Map<String, dynamic>? nutrisi;
@@ -15,6 +20,48 @@ class ResultScreen extends StatelessWidget {
     required this.label,
     required this.nutrisi,
   }) : super(key: key);
+
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
+  bool _isLoading = false;
+  Future<void> _simpanNutrisi() async {
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+    setState(() => _isLoading = true);
+    try {
+      await Supabase.instance.client.from('riwayat_komsumsi').insert({
+        'user_id': userId,
+        'nama_makanan': widget.nutrisi?['nama'],
+        'ukuran_porsi': widget.nutrisi?['jumlahpersajian'],
+        'kalori': widget.nutrisi?['kalori'],
+        'protein': widget.nutrisi?['protein'],
+        'lemak': widget.nutrisi?['lemak'],
+        'karbohidrat': widget.nutrisi?['karbohidrat'],
+        'serat': widget.nutrisi?['serat'],
+        'zat_besi': widget.nutrisi?['zatbesi'],
+        'kalium': widget.nutrisi?['kalium'],
+        'vitamin': widget.nutrisi?['vitamin'],
+        'manfaat': widget.nutrisi?['manfaat'],
+        'peringatan': widget.nutrisi?['peringatan'],
+        // 'created_at': DateTime.now().toIso8601String(),
+      });
+
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(message: "Data berhasil disimpan ke riwayat!"),
+      );
+    } catch (e) {
+      print("Gagal menyimpan data: $e");
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(message: "Gagal menyimpan data"),
+      );
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +75,12 @@ class ResultScreen extends StatelessWidget {
         SliverAppBar(
           automaticallyImplyLeading: false,
           backgroundColor: ColorsApp.white,
-          expandedHeight: 300,
+          expandedHeight: 200,
           flexibleSpace: Padding(
             padding: const EdgeInsets.all(8.0),
             child: FlexibleSpaceBar(
               background: Image.file(
-                image,
+                widget.image,
                 height: 200,
               ),
             ),
@@ -46,43 +93,29 @@ class ResultScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Gambar yang diklasifikasi
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 20),
-                //   child: Container(
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(16),
-                //       color: ColorsApp.pink,
-                //       boxShadow: [
-                //         BoxShadow(
-                //           color: Colors.black.withOpacity(0.05),
-                //           blurRadius: 10,
-                //           offset: Offset(0, 4),
-                //         ),
-                //       ],
-                //     ),
-                //     child: ClipRRect(
-                //       borderRadius: BorderRadius.circular(16),
-                //       child: Image.file(image, height: 250, fit: BoxFit.cover),
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(height: 20),
-
                 // Label hasil klasifikasi
-                SizedBox(height: 10),
+                // SizedBox(height: 3),
+                // Text(
+                //   label,
+                //   style: GoogleFonts.poppins(
+                //     fontSize: 24,
+                //     fontWeight: FontWeight.bold,
+                //     color: ColorsApp.text,
+                //   ),
+                //   textAlign: TextAlign.center,
+                // ),
                 Text(
-                  label,
+                  '${widget.nutrisi!['nama']}',
                   style: GoogleFonts.poppins(
-                    fontSize: 24,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: ColorsApp.text,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 5),
                 // Informasi Gizi
-                nutrisi != null
+                widget.nutrisi != null
                     ? Container(
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
@@ -107,25 +140,50 @@ class ResultScreen extends StatelessWidget {
                                 color: ColorsApp.black,
                               ),
                             ),
+                            SizedBox(height: 3),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Ukuran Porsi",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: ColorsApp.black,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: Text(
+                                    "${widget.nutrisi!['jumlahpersajian']}",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: ColorsApp.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                             SizedBox(height: 16),
                             // menampilkan hasil nutrisi berdasarkan gambar yang di upload
                             _buildNutritionItem(
-                                'Kalori', "${nutrisi!['kalori']} kkal"),
+                                'Kalori', "${widget.nutrisi!['kalori']} kkal"),
                             _buildNutritionItem(
-                                'Protein', "${nutrisi!['protein']} g"),
+                                'Protein', "${widget.nutrisi!['protein']} g"),
                             _buildNutritionItem(
-                                'Lemak', "${nutrisi!['lemak']} g"),
+                                'Lemak', "${widget.nutrisi!['lemak']} g"),
+                            _buildNutritionItem('Karbohidrat',
+                                "${widget.nutrisi!['karbohidrat']} g"),
                             _buildNutritionItem(
-                                'Karbohidrat', "${nutrisi!['karbohidrat']} g"),
+                                'Serat', "${widget.nutrisi!['serat']} g"),
                             _buildNutritionItem(
-                                'Serat', "${nutrisi!['serat']} g"),
+                                'Zat Besi', "${widget.nutrisi!['zatbesi']} mg"),
                             _buildNutritionItem(
-                                'Zat Besi', "${nutrisi!['zat_besi']} mg"),
+                                'Kalium', "${widget.nutrisi!['kalium']} µg"),
                             _buildNutritionItem(
-                                'Asam Folat', "${nutrisi!['asam_folat']} µg"),
-                            _buildNutritionItem(
-                                'Kalsium', "${nutrisi!['kalsium']} mg"),
-                            SizedBox(height: 16),
+                                'Vitamin', "${widget.nutrisi!['vitamin']}"),
+                            SizedBox(height: 3),
 
                             // Manfaat dan Peringatan
                             Text(
@@ -138,7 +196,7 @@ class ResultScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 6),
                             Text(
-                              nutrisi!['manfaat'] ?? '-',
+                              widget.nutrisi!['manfaat'] ?? '-',
                               style: GoogleFonts.poppins(
                                 fontSize: 16,
                                 color: ColorsApp.black,
@@ -155,7 +213,7 @@ class ResultScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 6),
                             Text(
-                              nutrisi!['peringatan'] ?? '-',
+                              widget.nutrisi!['peringatan'] ?? '-',
                               style: GoogleFonts.poppins(
                                 fontSize: 16,
                                 color: ColorsApp.black,
@@ -169,29 +227,22 @@ class ResultScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 // Tombol Simpan
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: ColorsApp.hijau,
-                                    foregroundColor: ColorsApp.white,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 30, vertical: 14),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    // TODO: Aksi simpan ke riwayat
-                                  },
-                                  child: Text(
-                                    'Simpan',
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: SharedButtton(
+                                    title: _isLoading
+                                        ? SharedCircularprogres()
+                                        : Text(
+                                            'Simpan',
+                                            style: GoogleFonts.poppins(
+                                              color: ColorsApp.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                    onPressed: _simpanNutrisi,
                                   ),
                                 ),
-
                                 // Tombol Tidak
                                 OutlinedButton(
                                   style: OutlinedButton.styleFrom(
@@ -199,8 +250,7 @@ class ResultScreen extends StatelessWidget {
                                       color: ColorsApp.black,
                                       width: 2,
                                     ),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 30, vertical: 14),
+                                    padding: EdgeInsets.symmetric(vertical: 16),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
