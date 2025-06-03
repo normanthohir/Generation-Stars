@@ -1,5 +1,6 @@
 name;kalori;protein;lemak;karbohidrat;serat;zat_besi;asam_folat;kalsium;manfaat;peringatan
-alpukat;160;2;15;9;7;0.6;81;12;Lemak sehat untuk perkembangan janin, kaya folat;Konsumsi dalam jumlah wajar karena tinggi kalori
-abon;122;2;2;2;2;1.2;2;2;tidak sehaat di makan ibu hamil;komsumsi dalam jumlah berlebihan
-bakso;100;1;1;1;1;0.1;31;1;daging bagus di makan oleh ibu ibu;kosmsumsi jangan berlebihan
-bakwan;50;3;13;9;3;0.4;23;31;tidak sehaat di makan ibu hamil karena berminyak;komsumsi dalam jumlah berlebihan
+BuahAnggur;160;2;15;9;7;0.6;81;12;Lemak sehat untuk perkembangan janin, kaya folat;Konsumsi dalam jumlah wajar karena tinggi kalori
+AyamGoreng;122;2;2;2;2;1.2;2;2;tidak sehaat di makan ibu hamil;komsumsi dalam jumlah berlebihan
+Bakso;100;1;1;1;1;0.1;31;1;daging bagus di makan oleh ibu ibu;kosmsumsi jangan berlebihan
+KueLapis;50;3;13;9;3;0.4;23;31;tidak sehaat di makan ibu hamil karena berminyak;komsumsi dalam jumlah berlebihan
+NasiGoreng;50;3;13;9;3;0.4;23;31;tidak sehaat di makan ibu hamil karena berminyak;komsumsi dalam jumlah berlebihan
