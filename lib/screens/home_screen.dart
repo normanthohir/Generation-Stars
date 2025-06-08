@@ -114,6 +114,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                     WidgetsNutrisiMingguan(),
+                    // NutrisiMingguanPage(
+                    //   tanggalKehamilan:
+                    //       DateTime.parse(_profileData!['tanggal_kehamilan']),
+                    // ),
                   ],
                 ),
               ),

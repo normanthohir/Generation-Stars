@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:generation_stars/screens/MainNavigationScreen.dart';
 import 'package:generation_stars/shared/shared_CircularProgres.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:generation_stars/shared/shared_button.dart';
@@ -52,11 +53,17 @@ class _ResultScreenState extends State<ResultScreen> {
         Overlay.of(context),
         CustomSnackBar.success(message: "Data berhasil disimpan ke riwayat!"),
       );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainNavigationScreen(),
+        ),
+      );
     } catch (e) {
       print("Gagal menyimpan data: $e");
       showTopSnackBar(
         Overlay.of(context),
-        CustomSnackBar.success(message: "Gagal menyimpan data"),
+        CustomSnackBar.error(message: "Gagal menyimpan data"),
       );
     } finally {
       setState(() => _isLoading = false);
@@ -227,8 +234,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 // Tombol Simpan
-                                SizedBox(
-                                  width: double.infinity,
+                                Expanded(
                                   child: SharedButtton(
                                     title: _isLoading
                                         ? SharedCircularprogres()
@@ -244,28 +250,32 @@ class _ResultScreenState extends State<ResultScreen> {
                                   ),
                                 ),
                                 // Tombol Tidak
-                                OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    side: BorderSide(
-                                      color: ColorsApp.black,
-                                      width: 2,
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 40),
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      side: BorderSide(
+                                        color: ColorsApp.hijauTua,
+                                        width: 2,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 16, horizontal: 30),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
                                     ),
-                                    padding: EdgeInsets.symmetric(vertical: 16),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
+                                    child: Text(
+                                      'Tidak',
+                                      style: GoogleFonts.poppins(
+                                        color: ColorsApp.hijauTua,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
                                     ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
                                   ),
-                                  child: Text(
-                                    'Tidak',
-                                    style: GoogleFonts.poppins(
-                                      color: ColorsApp.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
                                 ),
                               ],
                             ),

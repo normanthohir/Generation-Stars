@@ -9,6 +9,8 @@ class NutrisiChartWidget extends StatefulWidget {
   State<NutrisiChartWidget> createState() => _NutrisiChartWidgetState();
 }
 
+// di ganti dengan diagram chart
+
 class _NutrisiChartWidgetState extends State<NutrisiChartWidget> {
   String selectedTrimester = 'Trimester 1';
 
