@@ -11,6 +11,7 @@ import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:generation_stars/widgets/widgets_nutrisi_mingguna.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shimmer/shimmer.dart';
 import '../services/image_picker_service.dart';
 import '../services/tflite_service.dart';
 import '../services/nutrition_service.dart';
@@ -48,22 +49,58 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // function  untuk memprosess gambar untuk ddeteksi nutrisi
   // atau mencocokan jenismakan dari model Tflite CNN dengan dara nutrisi makanan di file CSV dengan label
+  // Future<void> _processImage(ImageSource source) async {
+  //   final image = await ImagePickerService.pickImage(source);
+  //   if (image == null) return;
+
+  //   setState(() => _image = image);
+
+  //   final result = await TFLiteService.classifyImage(image);
+  //   if (result != null) {
+  //     final label = result['label'];
+  //     final nutrisi = await NutritionService.loadNutrisi(label);
+
+  //     setState(() {
+  //       _result = label;
+  //       _nutrisi = nutrisi;
+  //     });
+
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => ResultScreen(
+  //           image: _image!,
+  //           label: _result!,
+  //           nutrisi: _nutrisi,
+  //         ),
+  //       ),
+  //     );
+  //   }
+  // }
   Future<void> _processImage(ImageSource source) async {
+    print("🔍 Memilih gambar...");
     final image = await ImagePickerService.pickImage(source);
-    if (image == null) return;
+    if (image == null) {
+      print("⚠️ Tidak ada gambar.");
+      return;
+    }
 
     setState(() => _image = image);
+    print("📷 Gambar berhasil dipilih: ${image.path}");
 
+    print("🧠 Mengklasifikasi gambar...");
     final result = await TFLiteService.classifyImage(image);
     if (result != null) {
       final label = result['label'];
-      final nutrisi = await NutritionService.loadNutrisi(label);
+      print("✅ Label hasil klasifikasi: $label");
 
+      final nutrisi = await NutritionService.loadNutrisi(label);
       setState(() {
         _result = label;
         _nutrisi = nutrisi;
       });
 
+      print("➡️ Navigasi ke ResultScreen...");
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -74,6 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       );
+    } else {
+      print("❌ Gagal klasifikasi");
     }
   }
 
@@ -104,7 +143,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                     _isLoading
-                        ? Text('Loading...')
+                        ? Shimmer.fromColors(
+                            baseColor: Colors.grey.shade300,
+                            highlightColor: Colors.grey.shade100,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 4),
+                                Container(
+                                  height: 11,
+                                  width: 160,
+                                  color: Colors.grey,
+                                ),
+                              ],
+                            ),
+                          )
                         : Text(
                             'Kehamilan minggu ke ${_hitungKehamilanPerminggu()}',
                             style: GoogleFonts.poppins(
@@ -113,11 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                    WidgetsNutrisiMingguan(),
-                    // NutrisiMingguanPage(
-                    //   tanggalKehamilan:
-                    //       DateTime.parse(_profileData!['tanggal_kehamilan']),
-                    // ),
+                    WidgetsNutrisiMingguan()
                   ],
                 ),
               ),
