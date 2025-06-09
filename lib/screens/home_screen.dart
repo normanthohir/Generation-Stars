@@ -6,12 +6,15 @@ import 'package:generation_stars/screens/tentang_aplikasi_screen.dart';
 import 'package:generation_stars/services/profile_service.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:generation_stars/widgets/widget_custom_appBar_menu.dart';
+import 'package:generation_stars/widgets/widget_dialog_loading.dart';
 import 'package:generation_stars/widgets/widget_image_source_modal.dart';
 import 'package:generation_stars/shared/shared_appbar.dart';
 import 'package:generation_stars/widgets/widgets_nutrisi_mingguna.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../services/image_picker_service.dart';
 import '../services/tflite_service.dart';
 import '../services/nutrition_service.dart';
@@ -88,8 +91,13 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => _image = image);
     print("📷 Gambar berhasil dipilih: ${image.path}");
 
+    showLoadingDialog(context);
+
     print("🧠 Mengklasifikasi gambar...");
     final result = await TFLiteService.classifyImage(image);
+
+    hideLoadingDialog(context);
+
     if (result != null) {
       final label = result['label'];
       print("✅ Label hasil klasifikasi: $label");
@@ -113,6 +121,10 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else {
       print("❌ Gagal klasifikasi");
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(message: "Gagal Gagal klasifikasi gambar."),
+      );
     }
   }
 
@@ -221,6 +233,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 // Widget  untuk memilih sumber gambar
+/*************  ✨ Windsurf Command ⭐  *************/
+  /// Widget untuk memilih sumber gambar
+  ///
+  /// Membuat tombol dengan label "Pilih gambar" dan icon camera retro
+  /// yang ketika ditekan akan menampilkan modal bottom sheet
+  /// [ImageSourceModal] untuk memilih sumber gambar dari camera atau
+  /// gallery.
+/*******  27906f49-fa8e-4a4b-9fd7-4e6284da01f6  *******/
   Widget _buttonPilihGambar() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40),
