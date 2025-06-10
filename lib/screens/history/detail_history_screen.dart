@@ -4,30 +4,40 @@ import 'package:generation_stars/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailHistoryScreen extends StatelessWidget {
-  final String foodName;
-  final String foodImage;
-  final int calories;
+  final String namaMakanan;
+  final String ukuranPorsi;
+  final double kalori;
   final double protein;
-  final double carbs;
-  final double fat;
-  final String description;
+  final double karbo;
+  final double lemak;
+  final double serat;
+  final double zat_besi;
+  final double kalium;
+  final String vitamin;
+  final String manfaat;
+  final String peringatan;
 
   const DetailHistoryScreen({
     super.key,
-    required this.foodName,
-    required this.foodImage,
-    required this.calories,
+    required this.namaMakanan,
+    required this.ukuranPorsi,
+    required this.kalori,
     required this.protein,
-    required this.carbs,
-    required this.fat,
-    required this.description,
+    required this.karbo,
+    required this.lemak,
+    required this.serat,
+    required this.zat_besi,
+    required this.kalium,
+    required this.vitamin,
+    required this.manfaat,
+    required this.peringatan,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsApp.white,
-      appBar: SharedAppbar(title: foodName, ipmlayLeadingFalse: true),
+      appBar: SharedAppbar(title: namaMakanan, ipmlayLeadingFalse: true),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -36,21 +46,15 @@ class DetailHistoryScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 10),
                   _buildNutritionHeader(),
                   const SizedBox(height: 20),
                   _buildNutritionGrid(),
                   const SizedBox(height: 30),
-                  _buildDetailSection(
-                    title: "Manfaat",
-                    content:
-                        "Makanan ini kaya akan protein yang baik untuk perkembangan janin dan asam lemak omega-3 yang mendukung perkembangan otak bayi.",
-                  ),
+                  _buildDetailSection(title: "Manfaat", content: "${manfaat}"),
                   const SizedBox(height: 20),
                   _buildDetailSection(
                     title: "Peringatan",
-                    content:
-                        "Sajikan dengan sayuran hijau untuk meningkatkan penyerapan zat besi. Hindari memasak terlalu lama untuk mempertahankan nutrisi.",
+                    content: "${peringatan}",
                   ),
                 ],
               ),
@@ -81,7 +85,7 @@ class DetailHistoryScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                "Ukuran porsi: 100 gram",
+                "$ukuranPorsi",
                 style: GoogleFonts.poppins(
                   color: Colors.grey[600],
                   fontSize: 14,
@@ -97,7 +101,7 @@ class DetailHistoryScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              "$calories kkal",
+              "$kalori kkal",
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.bold,
                 color: Colors.blue[800],
@@ -114,44 +118,52 @@ class DetailHistoryScreen extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
-      childAspectRatio: 3,
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
+      childAspectRatio: 2.6,
+      crossAxisSpacing: 13,
+      mainAxisSpacing: 13,
       children: [
         _buildNutritionItem(
           "Protein",
           "${protein}g",
-          "Membangun jaringan janin",
           Icons.fitness_center,
           Colors.green,
         ),
         _buildNutritionItem(
           "Karbohidrat",
-          "${carbs}g",
-          "Sumber energi",
+          "${karbo}g",
           Icons.grain,
           Colors.orange,
         ),
         _buildNutritionItem(
           "Lemak",
-          "${fat}g",
-          "Perkembangan otak",
+          "${lemak}g",
           Icons.water_drop,
           Colors.blue,
         ),
         _buildNutritionItem(
           "Serat",
-          "3.5g",
-          "Pencernaan sehat",
+          "${serat}g",
           Icons.forest,
           Colors.purple,
+        ),
+        _buildNutritionItem(
+          "Zat Besi",
+          "${zat_besi}mg",
+          Icons.iron,
+          Colors.redAccent.shade200,
+        ),
+        _buildNutritionItem(
+          "Kalium",
+          "${kalium}mg",
+          Icons.ac_unit,
+          Colors.cyan,
         ),
       ],
     );
   }
 
   Widget _buildNutritionItem(
-      String title, String value, String subtitle, IconData icon, Color color) {
+      String title, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
