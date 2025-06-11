@@ -159,13 +159,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             baseColor: Colors.grey.shade300,
                             highlightColor: Colors.grey.shade100,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 4),
                                 Container(
                                   height: 11,
                                   width: 160,
-                                  color: Colors.grey,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
                               ],
                             ),
@@ -182,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 15),
               Text(
                 'Deteksi Nutrisi Makanan',
                 style: GoogleFonts.poppins(

@@ -138,7 +138,7 @@ class DetailHistoryScreen extends StatelessWidget {
           "Lemak",
           "${lemak}g",
           Icons.water_drop,
-          Colors.blue,
+          Colors.amber,
         ),
         _buildNutritionItem(
           "Serat",
