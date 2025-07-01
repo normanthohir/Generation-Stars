@@ -25,7 +25,7 @@ class _TrimesterScreenState extends State<TrimesterScreen> {
     'Lemak',
     'Karbohidrat',
     'Serat',
-    'Zat Besi',
+    'Zat_Besi',
     'Kalium'
   ];
 
@@ -99,7 +99,7 @@ class _TrimesterScreenState extends State<TrimesterScreen> {
 
     return Scaffold(
       backgroundColor: ColorsApp.white,
-      appBar: SharedAppbar(title: 'Perkembangan Nutrisi'),
+      appBar: SharedAppbar(title: 'Progres Nutrisi'),
       body: LayoutBuilder(
         builder: (context, raints) {
           final isSmallScreen = raints.maxWidth < 600;

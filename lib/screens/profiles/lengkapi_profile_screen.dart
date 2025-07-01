@@ -97,36 +97,38 @@ class _LengkapiProfileState extends State<LengkapiProfile> {
             key: _formKey,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Header Informasi
-                  Text(
-                    'Lengkapi Profil',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                      color: ColorsApp.black,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Header Informasi
+                    Text(
+                      'Lengkapi Profil',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        color: ColorsApp.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Data ini akan membantu kami memberikan pengalaman terbaik',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                      color: ColorsApp.grey,
+                    Text(
+                      'Data ini akan membantu kami memberikan pengalaman terbaik',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        color: ColorsApp.grey,
+                      ),
                     ),
-                  ),
 
-                  SizedBox(height: 24),
-                  // Form Input
-                  _buildInputForm(),
+                    SizedBox(height: 24),
+                    // Form Input
+                    _buildInputForm(),
 
-                  SizedBox(height: 40),
-                  // Tombol Simpan
-                  _buildSubmitButton(),
-                ],
+                    SizedBox(height: 40),
+                    // Tombol Simpan
+                    _buildSubmitButton(),
+                  ],
+                ),
               ),
             ),
           ),

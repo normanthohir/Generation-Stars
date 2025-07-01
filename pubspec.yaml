@@ -85,6 +85,7 @@ flutter:
     - assets/models/labels.txt
     - assets/data/food_nutrition.csv
     - assets/images/
+    - assets/images/tim/
     - assets/images/edukasi/
     # - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

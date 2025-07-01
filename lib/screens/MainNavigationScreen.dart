@@ -74,9 +74,9 @@ final _navBarItems = [
     selectedColor: ColorsApp.white,
   ),
   SalomonBottomBarItem(
-    icon: Icon(FontAwesomeIcons.chartColumn, size: 20),
+    icon: Icon(FontAwesomeIcons.chartLine, size: 20),
     title: Text(
-      "Trimester",
+      "Progres",
       style: GoogleFonts.poppins(fontSize: 15),
     ),
     selectedColor: ColorsApp.white,
