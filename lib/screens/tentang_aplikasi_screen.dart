@@ -38,17 +38,12 @@ class TentangAplikasiScreen extends StatelessWidget {
                 icon: Icons.monitor_heart,
                 title: 'Pemantauan Nutrisi',
                 description:
-                    'Pantau asupan gizi harian untuk kesehatan ibu dan janin',
+                    'Pantau asupan gizi mingguan dan 4 bulan terakhir untuk kesehatan ibu dan janin',
               ),
               _buildFeatureItem(
                 icon: Icons.calendar_today,
                 title: 'Kalender Kehamilan',
                 description: 'Lacak perkembangan janin mingguan',
-              ),
-              _buildFeatureItem(
-                icon: Icons.article,
-                title: 'Artikel Terpercaya',
-                description: 'Informasi kesehatan dari sumber terpercaya',
               ),
               SizedBox(height: 24),
 
@@ -67,19 +62,19 @@ class TentangAplikasiScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     _buildTeamMember(
-                      name: 'Dr. Sarah',
-                      role: 'Dokter Kandungan',
-                      image: 'assets/images/ibu_hamil.png',
+                      name: 'Norman Thohir',
+                      role: 'Pengembangan Aplikasi',
+                      image: 'assets/images/tim/norman.jpg',
                     ),
                     _buildTeamMember(
-                      name: 'Dr. Michael',
-                      role: 'Ahli Gizi',
-                      image: 'assets/images/ibu_hamil.png',
+                      name: 'Prisilia Lahonapessy',
+                      role: 'Pengembangan Aplikasi',
+                      image: 'assets/images/tim/prisilia.jpg',
                     ),
                     _buildTeamMember(
-                      name: 'Dr. Michael',
-                      role: 'Ahli Gizi',
-                      image: 'assets/images/ibu_hamil.png',
+                      name: 'Rizka Utami ',
+                      role: 'Pengembangan Aplikasi',
+                      image: 'assets/images/tim/rizka.jpg',
                     ),
                   ],
                 ),
@@ -152,9 +147,9 @@ class TentangAplikasiScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStatItem('10K+', 'Pengguna'),
-                _buildStatItem('4.9', 'Rating'),
-                _buildStatItem('2023', 'Tahun Rilis'),
+                _buildStatItem('0', 'Pengguna'),
+                _buildStatItem('0', 'Rating'),
+                _buildStatItem('2025', 'Tahun Rilis'),
               ],
             ),
           ],
@@ -297,7 +292,7 @@ class TentangAplikasiScreen extends StatelessWidget {
             SizedBox(height: 12),
             _buildContactItem(
               icon: Icons.email,
-              label: 'support@bundasehat.com',
+              label: 'KawalStunting@email.com',
             ),
             _buildContactItem(
               icon: Icons.phone,
@@ -305,7 +300,7 @@ class TentangAplikasiScreen extends StatelessWidget {
             ),
             _buildContactItem(
               icon: Icons.language,
-              label: 'www.bundasehat.com',
+              label: 'www.kawalstuting.com',
             ),
           ],
         ),
