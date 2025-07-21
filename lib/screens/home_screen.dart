@@ -89,11 +89,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     setState(() => _image = image);
-    print("📷 Gambar berhasil dipilih: ${image.path}");
+    print("Gambar berhasil dipilih: ${image.path}");
 
     showLoadingDialog(context);
 
-    print("🧠 Mengklasifikasi gambar...");
+    print("Mengklasifikasi gambar...");
     final result = await TFLiteService.classifyImage(image);
 
     hideLoadingDialog(context);
@@ -120,10 +120,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     } else {
-      print("❌ Gagal klasifikasi");
       showTopSnackBar(
         Overlay.of(context),
-        CustomSnackBar.error(message: "Gagal Gagal klasifikasi gambar."),
+        CustomSnackBar.error(message: "Gagal klasifikasi gambar."),
       );
     }
   }
@@ -235,14 +234,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 // Widget  untuk memilih sumber gambar
-/*************  ✨ Windsurf Command ⭐  *************/
-  /// Widget untuk memilih sumber gambar
-  ///
-  /// Membuat tombol dengan label "Pilih gambar" dan icon camera retro
-  /// yang ketika ditekan akan menampilkan modal bottom sheet
-  /// [ImageSourceModal] untuk memilih sumber gambar dari camera atau
-  /// gallery.
-/*******  27906f49-fa8e-4a4b-9fd7-4e6284da01f6  *******/
   Widget _buttonPilihGambar() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40),
@@ -292,8 +283,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // menghitung usia kehamilan perminggu
   String _hitungKehamilanPerminggu() {
-    final startDate = DateTime.parse(_profileData!['tanggal_kehamilan']);
-    final weeks = DateTime.now().difference(startDate).inDays ~/ 7;
-    return weeks.toString();
+    // mengambil tanggal kehamilan dari data profile
+    final mulaiTgl = DateTime.parse(_profileData!['tanggal_kehamilan']);
+    // menghitung selisih hari antara tanggal sekarang dan tanggal kehamilan
+    final mingguKe = DateTime.now().difference(mulaiTgl).inDays ~/ 7;
+    return mingguKe.toString();
   }
 }
+// 1 juli -> 5 agustus = 36 hari -/ 7 = 5
+// 25 maret -> 26 agustus = 84 hari -/ 7 = 12
+// 1 januari -> 1 maret = 59 hari -/ 7 = 8

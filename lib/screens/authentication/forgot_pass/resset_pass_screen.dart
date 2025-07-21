@@ -155,8 +155,8 @@ class _ResetPassState extends State<ResetPass> {
                       },
                     ),
                     validator: (value) {
-                      if (value!.isEmpty || value.length < 6) {
-                        return 'Kata sandi tidak boleh kurang dari 6 karakter!';
+                      if (value!.isEmpty || value.length < 8) {
+                        return 'Kata sandi tidak boleh kurang dari 8 karakter!';
                       }
                       return null;
                     },
@@ -181,8 +181,8 @@ class _ResetPassState extends State<ResetPass> {
                       },
                     ),
                     validator: (value) {
-                      if (value!.isEmpty || value.length < 6) {
-                        return 'Kata sandi tidak boleh kurang dari 6 karakter!';
+                      if (value!.isEmpty || value.length < 8) {
+                        return 'Kata sandi tidak boleh kurang dari 8 karakter!';
                       }
                       if (value != _passwordController.text) {
                         return 'Konfirmasi kata sandi tidak cocok!';

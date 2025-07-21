@@ -67,7 +67,7 @@ class TentangAplikasiScreen extends StatelessWidget {
                       image: 'assets/images/tim/norman.jpg',
                     ),
                     _buildTeamMember(
-                      name: 'Prisilia Lahonapessy',
+                      name: 'Prisilia Louhenapessy',
                       role: 'Pengembangan Aplikasi',
                       image: 'assets/images/tim/prisilia.jpg',
                     ),

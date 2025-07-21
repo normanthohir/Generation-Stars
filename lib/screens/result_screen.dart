@@ -46,7 +46,7 @@ class _ResultScreenState extends State<ResultScreen> {
         'vitamin': widget.nutrisi?['vitamin'],
         'manfaat': widget.nutrisi?['manfaat'],
         'peringatan': widget.nutrisi?['peringatan'],
-        // 'created_at': DateTime.now().toIso8601String(),
+        'created_at': DateTime.now().toIso8601String(),
       });
 
       showTopSnackBar(
@@ -140,7 +140,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Informasi Gizi",
+                              "Informasi Nutrisi",
                               style: GoogleFonts.poppins(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
