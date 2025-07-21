@@ -7,6 +7,7 @@ import 'package:generation_stars/theme/effect_shimer/riwayar_komsumsi_shimer.dar
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class HistoryScreen extends StatefulWidget {
   HistoryScreen({super.key});
@@ -22,8 +23,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
   final _supabase = Supabase.instance.client;
 
   @override
+  // void initState() {
+  //   super.initState();
+  //   _fetchHistoryData();
+  // }
   void initState() {
     super.initState();
+    initializeDateFormatting('id_ID', null).then((_) {
+      setState(() {});
+    });
     _fetchHistoryData();
   }
 
@@ -147,7 +155,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                 ),
                 subtitle: Text(
-                  DateFormat('EEEE, d MMMM y').format(_selectedDate),
+                  DateFormat('EEEE, d MMMM y', 'id_ID').format(_selectedDate),
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     color: ColorsApp.white,
@@ -225,7 +233,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   ),
                                 ),
                                 title: Text(
-                                  item['nama_makanan'] ?? 'Makanan',
+                                  item['nama_makanan'] ??
+                                      'Makanan tidak di kenali',
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16,

@@ -6,14 +6,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:generation_stars/theme/colors.dart';
 
-class TrimesterScreen extends StatefulWidget {
-  TrimesterScreen({Key? key}) : super(key: key);
+class ProgressScreen extends StatefulWidget {
+  ProgressScreen({Key? key}) : super(key: key);
 
   @override
-  State<TrimesterScreen> createState() => _TrimesterScreenState();
+  State<ProgressScreen> createState() => _ProgressScreenState();
 }
 
-class _TrimesterScreenState extends State<TrimesterScreen> {
+class _ProgressScreenState extends State<ProgressScreen> {
   final supabase = Supabase.instance.client;
   int selectedNutrient = 0;
   bool isLoading = true;

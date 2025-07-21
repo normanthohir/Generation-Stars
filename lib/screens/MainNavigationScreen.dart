@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:generation_stars/screens/history/history_screen.dart';
 import 'package:generation_stars/screens/home_screen.dart';
 import 'package:generation_stars/screens/profiles/profile_screen.dart';
-import 'package:generation_stars/screens/progres_trimester/trimester_screen.dart';
+import 'package:generation_stars/screens/progres/progress_screen.dart';
 import 'package:generation_stars/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -26,7 +26,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   final List<Widget> _pages = <Widget>[
     HomeScreen(),
-    TrimesterScreen(),
+    ProgressScreen(),
     HistoryScreen(),
     ProfileScreen()
   ];
